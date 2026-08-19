@@ -1,0 +1,3829 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KomLogik - Platform Pembelajaran Interaktif Komunikasi Logistik</title>
+    
+    <!-- CSS Stylesheet -->
+    <style>
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    --primary-pink: #FF6B9B;
+    --primary-pink-hover: #E05280;
+    --pastel-pink: #FFD2E1;
+    --light-pink: #FFF0F5;
+    --baby-blue: #A2D2FF;
+    --baby-blue-hover: #82BDFF;
+    --pastel-blue: #E8F4FF;
+    --dark-blue: #4A90E2;
+    --white: #FFFFFF;
+    --text-dark: #2B2D42;
+    --text-muted: #5C5E76;
+    --bg-light: #F7FAFC;
+    --success: #2EC4B6;
+    --success-light: #E6FFFA;
+    --error: #E63946;
+    --error-light: #FFEBEB;
+    --warning: #FFB703;
+    --warning-light: #FEF6E0;
+    
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Plus Jakarta Sans', sans-serif;
+    
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.02);
+    --shadow-md: 0 8px 24px rgba(255, 107, 155, 0.08);
+    --shadow-lg: 0 16px 32px rgba(162, 210, 255, 0.15);
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Reset Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+}
+
+/* Main Layout */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Top Navigation Bar */
+header {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 2px solid var(--pastel-blue);
+    padding: 1rem 2rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.nav-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--primary-pink), var(--baby-blue));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 1.25rem;
+    font-weight: 800;
+    box-shadow: 0 4px 10px rgba(255, 107, 155, 0.2);
+}
+
+.logo-text h1 {
+    font-size: 1.25rem;
+    color: var(--text-dark);
+    letter-spacing: -0.5px;
+}
+
+.logo-text span {
+    font-size: 0.75rem;
+    color: var(--primary-pink);
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.btn {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--radius-sm);
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.btn-primary {
+    background-color: var(--primary-pink);
+    color: var(--white);
+    box-shadow: 0 4px 12px rgba(255, 107, 155, 0.25);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-pink-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 107, 155, 0.35);
+}
+
+.btn-secondary {
+    background-color: var(--pastel-blue);
+    color: var(--dark-blue);
+    border: 1px solid var(--baby-blue);
+}
+
+.btn-secondary:hover {
+    background-color: var(--baby-blue);
+    color: var(--white);
+    transform: translateY(-2px);
+}
+
+.btn-lecturer {
+    background-color: var(--white);
+    color: var(--text-dark);
+    border: 2px solid var(--primary-pink);
+}
+
+.btn-lecturer:hover {
+    background-color: var(--primary-pink);
+    color: var(--white);
+    transform: translateY(-2px);
+}
+
+/* Dashboard Banner */
+.banner {
+    background: linear-gradient(135deg, #FFF0F5 0%, #E8F4FF 100%);
+    padding: 2.5rem 2rem;
+    border-bottom: 2px solid var(--pastel-blue);
+}
+
+.banner-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+}
+
+.banner-info {
+    max-width: 650px;
+}
+
+.banner-badge {
+    background-color: var(--primary-pink);
+    color: var(--white);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    display: inline-block;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.banner-info h2 {
+    font-size: 2rem;
+    line-height: 1.25;
+    margin-bottom: 0.75rem;
+    color: var(--text-dark);
+}
+
+.banner-info p {
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+.banner-stats {
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--pastel-pink);
+    display: flex;
+    flex-direction: column;
+    min-width: 250px;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 10px;
+    background-color: var(--pastel-pink);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--primary-pink), var(--baby-blue));
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    text-align: center;
+}
+
+.stat-item {
+    background-color: var(--bg-light);
+    padding: 0.5rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--pastel-blue);
+}
+
+.stat-num {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary-pink);
+}
+
+.stat-lbl {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+/* Main Content Wrapper */
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+    flex-grow: 1;
+    width: 100%;
+}
+
+/* Navigation Tabs */
+.tabs-navigation {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    background-color: var(--white);
+    padding: 0.5rem;
+    border-radius: 50px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--pastel-blue);
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    background: none;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tab-btn.active {
+    background-color: var(--primary-pink);
+    color: var(--white);
+    box-shadow: 0 4px 10px rgba(255, 107, 155, 0.2);
+}
+
+.tab-btn:hover:not(.active) {
+    background-color: var(--pastel-blue);
+    color: var(--dark-blue);
+}
+
+/* Tab Panel Visibility */
+.tab-panel {
+    display: none;
+    animation: fadeIn 0.4s ease;
+}
+
+.tab-panel.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Card layout & generic classes */
+.card {
+    background: var(--white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--pastel-blue);
+    overflow: hidden;
+    margin-bottom: 2rem;
+    padding: 2rem;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+    border-bottom: 3px solid var(--pastel-pink);
+    display: inline-block;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Modul 1: 7 Ciri-ciri Komunikasi */
+.ciri-card {
+    background: var(--white);
+    border-radius: var(--radius-md);
+    border: 2px solid var(--pastel-blue);
+    padding: 1.5rem;
+    position: relative;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.ciri-card:hover {
+    border-color: var(--primary-pink);
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.ciri-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--pastel-pink);
+    color: var(--primary-pink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.ciri-card.active-card {
+    border-color: var(--primary-pink);
+    background-color: var(--light-pink);
+    box-shadow: var(--shadow-md);
+}
+
+.ciri-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.ciri-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-dark);
+}
+
+.ciri-card p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+/* Interactive Ciri Details */
+.ciri-details-box {
+    background: linear-gradient(135deg, var(--white) 0%, var(--pastel-blue) 100%);
+    border-radius: var(--radius-md);
+    border: 2px solid var(--primary-pink);
+    padding: 2rem;
+    margin-top: 1.5rem;
+    animation: slideUp 0.3s ease;
+}
+
+.ciri-details-title {
+    font-size: 1.3rem;
+    color: var(--primary-pink);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.details-list-box {
+    background: rgba(255, 255, 255, 0.7);
+    padding: 1.25rem;
+    border-radius: var(--radius-sm);
+    border-left: 4px solid var(--primary-pink);
+}
+
+.details-list-box h4 {
+    margin-bottom: 0.75rem;
+    color: var(--text-dark);
+    font-size: 1rem;
+}
+
+.details-list-box ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.details-list-box ul li {
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    position: relative;
+    padding-left: 1.25rem;
+    color: var(--text-muted);
+}
+
+.details-list-box ul li::before {
+    content: "✦";
+    position: absolute;
+    left: 0;
+    color: var(--primary-pink);
+}
+
+.example-box {
+    background: rgba(255, 255, 255, 0.7);
+    padding: 1.25rem;
+    border-radius: var(--radius-sm);
+    border-left: 4px solid var(--baby-blue);
+}
+
+.example-box h4 {
+    margin-bottom: 0.75rem;
+    color: var(--text-dark);
+    font-size: 1rem;
+}
+
+.logistics-scenario-tag {
+    background-color: var(--baby-blue);
+    color: var(--white);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.example-box p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* Grapevine / Khabar Angin Interactive Section */
+.grapevine-container {
+    background: linear-gradient(135deg, #FFF5F7 0%, #F0F7FF 100%);
+    border-radius: var(--radius-lg);
+    border: 2px dashed var(--primary-pink);
+    padding: 2rem;
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.grapevine-header {
+    max-width: 600px;
+    margin: 0 auto 1.5rem auto;
+}
+
+.grapevine-header h3 {
+    color: var(--primary-pink);
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+}
+
+.grapevine-interactive {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+}
+
+.grapevine-node {
+    background: var(--white);
+    padding: 1.25rem;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    width: 280px;
+    border: 1px solid var(--pastel-pink);
+    transition: var(--transition);
+}
+
+.grapevine-node:hover {
+    transform: scale(1.03);
+    border-color: var(--baby-blue);
+}
+
+.grapevine-avatar {
+    width: 50px;
+    height: 50px;
+    background-color: var(--pastel-blue);
+    border-radius: 50%;
+    margin: 0 auto 1rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.grapevine-avatar.pink {
+    background-color: var(--pastel-pink);
+}
+
+.grapevine-node h4 {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.grapevine-node .role {
+    font-size: 0.75rem;
+    color: var(--primary-pink);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.grapevine-speech {
+    background-color: var(--bg-light);
+    padding: 0.75rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    position: relative;
+    border-left: 3px solid var(--baby-blue);
+}
+
+.grapevine-effect-box {
+    background: var(--white);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    max-width: 800px;
+    margin: 0 auto;
+    border: 1px solid var(--pastel-blue);
+}
+
+.grapevine-effect-box h4 {
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+}
+
+.grapevine-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+}
+
+.grapevine-effect-item {
+    background-color: var(--pastel-blue);
+    padding: 1rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--dark-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+/* Modul 2: Kemahiran Komunikasi Flip Cards */
+.flip-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    perspective: 1000px;
+    margin-bottom: 2rem;
+}
+
+.flip-card {
+    height: 380px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.flip-card.flipped {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: var(--radius-md);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--pastel-blue);
+}
+
+.flip-card-front {
+    background: var(--white);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.flip-card-front .icon {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    background: var(--light-pink);
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-pink);
+}
+
+.flip-card-front h3 {
+    font-size: 1.3rem;
+    color: var(--text-dark);
+    margin-bottom: 0.75rem;
+}
+
+.flip-card-front p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.flip-hint {
+    margin-top: 1.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--primary-pink);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.flip-card-back {
+    background: linear-gradient(135deg, var(--white) 0%, var(--pastel-pink) 100%);
+    transform: rotateY(180deg);
+    justify-content: space-between;
+}
+
+.flip-card-back h3 {
+    font-size: 1.15rem;
+    color: var(--primary-pink);
+    border-bottom: 2px solid var(--white);
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.flip-content-scroll {
+    overflow-y: auto;
+    flex-grow: 1;
+    padding-right: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.flip-content-scroll::-webkit-scrollbar {
+    width: 4px;
+}
+
+.flip-content-scroll::-webkit-scrollbar-thumb {
+    background-color: var(--primary-pink);
+    border-radius: 10px;
+}
+
+.flip-card-back p {
+    font-size: 0.8rem;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.flip-card-back ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.flip-card-back ul li {
+    font-size: 0.75rem;
+    margin-bottom: 0.4rem;
+    position: relative;
+    padding-left: 1rem;
+    color: var(--text-dark);
+    font-weight: 500;
+}
+
+.flip-card-back ul li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--primary-pink);
+    font-weight: bold;
+}
+
+.flip-card-back .btn-flip-back {
+    align-self: center;
+    font-size: 0.75rem;
+    padding: 0.4rem 0.8rem;
+}
+
+/* Modul 3: 7C Principles Before/After Toggle */
+.toggle-panel {
+    background-color: var(--white);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--pastel-blue);
+    margin-bottom: 1.5rem;
+}
+
+.toggle-header {
+    padding: 1.25rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.toggle-header:hover {
+    background-color: var(--pastel-blue);
+}
+
+.toggle-header h3 {
+    font-size: 1.15rem;
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.toggle-header h3 span {
+    font-size: 1rem;
+    color: var(--primary-pink);
+    font-weight: 800;
+}
+
+.toggle-header .arrow {
+    font-size: 1.2rem;
+    transition: var(--transition);
+}
+
+.toggle-panel.active-panel .toggle-header .arrow {
+    transform: rotate(180deg);
+}
+
+.toggle-content {
+    display: none;
+    padding: 2rem;
+    border-top: 1px solid var(--pastel-blue);
+    background-color: var(--bg-light);
+    animation: slideDown 0.3s ease;
+}
+
+.toggle-panel.active-panel .toggle-content {
+    display: block;
+}
+
+@keyframes slideDown {
+    from { height: 0; opacity: 0; }
+    to { height: auto; opacity: 1; }
+}
+
+.comparison-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+    .comparison-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.comp-box {
+    background-color: var(--white);
+    border-radius: var(--radius-sm);
+    padding: 1.25rem;
+    box-shadow: var(--shadow-sm);
+    border-top: 4px solid var(--error);
+}
+
+.comp-box.better {
+    border-top-color: var(--success);
+}
+
+.comp-badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.comp-badge.bad {
+    background-color: var(--error-light);
+    color: var(--error);
+}
+
+.comp-badge.good {
+    background-color: var(--success-light);
+    color: var(--success);
+}
+
+.comp-text {
+    font-family: monospace;
+    background-color: var(--bg-light);
+    padding: 1rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    margin-bottom: 0.75rem;
+    white-space: pre-wrap;
+    border: 1px dashed var(--pastel-blue);
+}
+
+.comp-explanation {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.comp-explanation strong {
+    color: var(--text-dark);
+}
+
+/* Simulation Section (Cabaran Logistik) */
+.sim-container {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    border: 2px solid var(--baby-blue);
+    overflow: hidden;
+}
+
+.sim-header {
+    background: linear-gradient(135deg, var(--baby-blue), var(--primary-pink));
+    color: var(--white);
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sim-header h3 {
+    font-size: 1.3rem;
+}
+
+.sim-badge {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.sim-body {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    height: 480px;
+}
+
+@media (max-width: 900px) {
+    .sim-body {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+}
+
+.sim-sidebar {
+    background-color: var(--pastel-blue);
+    padding: 1.5rem;
+    border-right: 1px solid var(--baby-blue);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sim-objective {
+    background-color: var(--white);
+    padding: 1rem;
+    border-radius: var(--radius-sm);
+    margin-bottom: 1rem;
+    border-left: 4px solid var(--primary-pink);
+    font-size: 0.85rem;
+}
+
+.sim-score-box {
+    text-align: center;
+    background: var(--white);
+    padding: 1rem;
+    border-radius: var(--radius-sm);
+}
+
+.sim-score-num {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary-pink);
+}
+
+.sim-chat-area {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.sim-chat-history {
+    overflow-y: auto;
+    flex-grow: 1;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-right: 0.5rem;
+}
+
+.sim-message {
+    max-width: 75%;
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    font-size: 0.85rem;
+    animation: slideUp 0.3s ease;
+}
+
+.sim-message.npc {
+    background-color: var(--pastel-blue);
+    align-self: flex-start;
+    border-bottom-left-radius: 2px;
+}
+
+.sim-message.user {
+    background-color: var(--pastel-pink);
+    color: var(--text-dark);
+    align-self: flex-end;
+    border-bottom-right-radius: 2px;
+}
+
+.sim-message.feedback {
+    align-self: center;
+    background-color: var(--warning-light);
+    border: 1px solid var(--warning);
+    color: var(--text-dark);
+    max-width: 90%;
+    text-align: center;
+}
+
+.sim-options-area {
+    border-top: 1px solid var(--pastel-blue);
+    padding-top: 1rem;
+}
+
+.sim-option-btn {
+    width: 100%;
+    text-align: left;
+    background: var(--white);
+    border: 2px solid var(--pastel-blue);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.sim-option-btn:hover {
+    border-color: var(--primary-pink);
+    background-color: var(--light-pink);
+}
+
+.sim-result-screen {
+    text-align: center;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.sim-result-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+/* Quiz Section */
+.quiz-card {
+    background-color: var(--white);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--pastel-blue);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.quiz-question-num {
+    font-size: 0.8rem;
+    color: var(--primary-pink);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.quiz-question-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+}
+
+.quiz-options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.quiz-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background-color: var(--bg-light);
+    border: 1px solid var(--pastel-blue);
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.quiz-option:hover {
+    border-color: var(--primary-pink);
+    background-color: var(--light-pink);
+}
+
+.quiz-option.selected {
+    border-color: var(--primary-pink);
+    background-color: var(--pastel-pink);
+}
+
+.quiz-option.correct {
+    border-color: var(--success);
+    background-color: var(--success-light);
+}
+
+.quiz-option.incorrect {
+    border-color: var(--error);
+    background-color: var(--error-light);
+}
+
+.quiz-option-letter {
+    width: 24px;
+    height: 24px;
+    background-color: var(--white);
+    border: 1px solid var(--pastel-blue);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.quiz-option.selected .quiz-option-letter {
+    background-color: var(--primary-pink);
+    color: var(--white);
+    border-color: var(--primary-pink);
+}
+
+.quiz-option.correct .quiz-option-letter {
+    background-color: var(--success);
+    color: var(--white);
+    border-color: var(--success);
+}
+
+.quiz-option.incorrect .quiz-option-letter {
+    background-color: var(--error);
+    color: var(--white);
+    border-color: var(--error);
+}
+
+.quiz-feedback {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    display: none;
+    border-left: 4px solid;
+    animation: fadeIn 0.3s ease;
+}
+
+.quiz-feedback.show {
+    display: block;
+}
+
+.quiz-feedback.correct-feedback {
+    background-color: var(--success-light);
+    border-left-color: var(--success);
+    color: var(--text-dark);
+}
+
+.quiz-feedback.incorrect-feedback {
+    background-color: var(--error-light);
+    border-left-color: var(--error);
+    color: var(--text-dark);
+}
+
+/* Modals */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background-color: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+    border: 2px solid var(--pastel-pink);
+    width: 100%;
+    max-width: 900px;
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.modal-header {
+    padding: 1.5rem 2rem;
+    border-bottom: 2px solid var(--pastel-blue);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--light-pink);
+}
+
+.modal-header h2 {
+    font-size: 1.4rem;
+    color: var(--primary-pink);
+}
+
+.close-btn {
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-muted);
+}
+
+.close-btn:hover {
+    color: var(--primary-pink);
+}
+
+.modal-body {
+    padding: 2rem;
+    overflow-y: auto;
+}
+
+/* Lecturer Panel Custom Styling */
+.lecturer-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.lecturer-stat-card {
+    background-color: var(--bg-light);
+    border: 1px solid var(--pastel-blue);
+    padding: 1.25rem;
+    border-radius: var(--radius-sm);
+    text-align: center;
+}
+
+.lecturer-stat-val {
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--primary-pink);
+}
+
+.lecturer-stat-lbl {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* Table Style */
+.table-container {
+    overflow-x: auto;
+    margin-bottom: 2rem;
+    border: 1px solid var(--pastel-blue);
+    border-radius: var(--radius-sm);
+}
+
+.lecturer-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.85rem;
+}
+
+.lecturer-table th, .lecturer-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--pastel-blue);
+}
+
+.lecturer-table th {
+    background-color: var(--pastel-blue);
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.lecturer-table tr:hover {
+    background-color: var(--bg-light);
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.status-badge.complete {
+    background-color: var(--success-light);
+    color: var(--success);
+}
+
+.status-badge.in-progress {
+    background-color: var(--warning-light);
+    color: var(--warning);
+}
+
+.lecturer-settings {
+    background-color: var(--pastel-blue);
+    padding: 1.5rem;
+    border-radius: var(--radius-sm);
+}
+
+.lecturer-settings h3 {
+    margin-bottom: 1rem;
+}
+
+.setting-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+}
+
+.setting-control {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Sticky Footer */
+footer {
+    background-color: var(--white);
+    border-top: 2px solid var(--pastel-blue);
+    padding: 1.5rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: auto;
+}
+
+/* Print Notes Layout Styles (For PDF generation) */
+#print-notes-template {
+    display: none;
+}
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #print-notes-template, #print-notes-template * {
+        visibility: visible;
+    }
+    #print-notes-template {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        display: block !important;
+        background-color: white;
+        color: black;
+    }
+    .print-page {
+        page-break-after: always;
+        padding: 20px;
+    }
+}
+
+.pdf-header {
+    border-bottom: 3px solid #FF6B9B;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pdf-title {
+    font-size: 22px;
+    color: #2B2D42;
+    font-weight: bold;
+}
+
+.pdf-meta {
+    font-size: 11px;
+    color: #5C5E76;
+}
+
+.pdf-section {
+    margin-bottom: 25px;
+}
+
+.pdf-section-title {
+    font-size: 16px;
+    color: #FF6B9B;
+    border-bottom: 1px solid #A2D2FF;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.pdf-content {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #2B2D42;
+}
+
+.pdf-content p {
+    margin-bottom: 8px;
+}
+
+.pdf-content ul {
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.pdf-content li {
+    margin-bottom: 4px;
+}
+
+.pdf-example-box {
+    background-color: #E8F4FF;
+    border-left: 4px solid #A2D2FF;
+    padding: 10px;
+    margin-top: 10px;
+    font-style: italic;
+    font-size: 11px;
+}
+
+/* Bottom complete action button */
+.complete-btn-container {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.btn-complete-section {
+    background-color: var(--success);
+    color: var(--white);
+    padding: 0.8rem 2rem;
+    font-size: 1.05rem;
+    box-shadow: 0 4px 12px rgba(46, 196, 182, 0.25);
+    border-radius: 50px;
+}
+
+.btn-complete-section:hover {
+    background-color: #24A195;
+    transform: translateY(-2px);
+}
+
+/* Login Container styles */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--pastel-pink) 0%, var(--pastel-blue) 100%);
+    padding: 2rem;
+}
+
+.login-card {
+    background: var(--white);
+    padding: 2.5rem;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+    border: 2px solid var(--pastel-pink);
+    width: 100%;
+    max-width: 480px;
+    text-align: center;
+}
+
+.login-logo-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-pink), var(--baby-blue));
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin: 0 auto 1.5rem auto;
+    box-shadow: 0 8px 20px rgba(255, 107, 155, 0.25);
+}
+
+.login-card h2 {
+    font-size: 1.8rem;
+    color: var(--text-dark);
+    margin-bottom: 0.25rem;
+}
+
+.login-card p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+}
+
+.login-form-group {
+    text-align: left;
+    margin-bottom: 1.25rem;
+}
+
+.login-form-group label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.login-form-group input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+    border: 2px solid var(--pastel-blue);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    transition: var(--transition);
+}
+
+.login-form-group input:focus {
+    outline: none;
+    border-color: var(--primary-pink);
+    background-color: var(--light-pink);
+}
+
+.login-divider {
+    display: flex;
+    align-items: center;
+    margin: 1.5rem 0;
+}
+
+.login-divider::before, .login-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: var(--pastel-blue);
+}
+
+.login-divider span {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    padding: 0 0.75rem;
+}
+
+.demo-profiles-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-height: 200px;
+    overflow-y: auto;
+    padding-right: 0.25rem;
+}
+
+.demo-profiles-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.demo-profiles-list::-webkit-scrollbar-thumb {
+    background-color: var(--pastel-pink);
+    border-radius: 10px;
+}
+
+.demo-profile-item {
+    background-color: var(--bg-light);
+    border: 1px solid var(--pastel-blue);
+    border-radius: var(--radius-sm);
+    padding: 0.6rem 1rem;
+    text-align: left;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.demo-profile-item:hover {
+    border-color: var(--primary-pink);
+    background-color: var(--light-pink);
+}
+
+.demo-profile-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.demo-profile-name {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.demo-profile-id {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.demo-profile-badge {
+    background-color: var(--pastel-blue);
+    color: var(--dark-blue);
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+}
+
+/* Individual Reset Button styles */
+.btn-reset-single {
+    background: none;
+    border: 1px solid var(--primary-pink);
+    color: var(--primary-pink);
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.btn-reset-single:hover {
+    background-color: var(--primary-pink);
+    color: var(--white);
+    box-shadow: 0 2px 6px rgba(255, 107, 155, 0.15);
+}
+
+</style>
+    
+    <!-- html2pdf.js CDN (For PDF generation) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5IfW9DZt8tCV33riuxDB37CtGc352gLfufY45vTo15c5zcKODgGCoUMCz5OobSPy6260WnKRg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <!-- LOGIN SCREEN -->
+    <div id="login-screen" class="login-container">
+        <div class="login-card">
+            <div class="login-logo-icon">KL</div>
+            <h2>KomLogik</h2>
+            <p>Platform Pembelajaran Interaktif Komunikasi Logistik</p>
+            
+            <div class="login-form-group">
+                <label for="student-name">Nama Penuh Pelajar:</label>
+                <input type="text" id="student-name" placeholder="Masukkan nama penuh anda...">
+            </div>
+            
+            <div class="login-form-group">
+                <label for="student-id">ID Pelajar:</label>
+                <input type="text" id="student-id" placeholder="Masukkan ID pelajar anda...">
+            </div>
+            
+            <button class="btn btn-primary" id="btn-login-submit" style="width: 100%; margin-top: 1rem; justify-content: center;">
+                🚪 Log Masuk
+            </button>
+            
+            <button class="btn btn-lecturer" id="btn-login-open-lecturer" style="width: 100%; margin-top: 0.5rem; justify-content: center; border-color: var(--primary-pink); color: var(--primary-pink);">
+                🎓 Kawalan Pensyarah (Log Masuk Staf)
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN APP WRAPPER (HIDDEN UNTIL LOGIN) -->
+    <div class="app-container" id="app-main-content" style="display: none;">
+        <!-- Navigation Header -->
+        <header>
+            <div class="nav-wrapper">
+                <div class="logo-section">
+                    <div class="logo-icon">KL</div>
+                    <div class="logo-text">
+                        <h1>KomLogik</h1>
+                        <span>Sijil Perkhidmatan Logistik (SLK)</span>
+                    </div>
+                </div>
+                <div class="nav-controls">
+                    <span id="current-user-badge" style="font-size: 0.8rem; font-weight: 700; color: var(--dark-blue); background: var(--pastel-blue); padding: 0.5rem 0.8rem; border-radius: 4px; border: 1px solid var(--baby-blue);"></span>
+                    <button class="btn btn-secondary" id="btn-download-pdf">
+                        <span>📥</span> Muat Turun PDF
+                    </button>
+                    <button class="btn btn-lecturer" id="btn-open-lecturer">
+                        <span>🎓</span> Kawalan Pensyarah
+                    </button>
+                    <button class="btn btn-lecturer" id="btn-logout" style="border-color: var(--error); color: var(--error);">
+                        <span>🚪</span> Keluar
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Top Banner / Course Header -->
+        <div class="banner">
+            <div class="banner-content">
+                <div class="banner-info">
+                    <span class="banner-badge">Topik 4</span>
+                    <h2>Kemahiran Komunikasi Perniagaan yang Efektif</h2>
+                    <p>Logistik bukan sekadar menggerakkan barang, ia adalah tentang menyelaraskan maklumat. Ketahui cara berkomunikasi secara profesional untuk mengelakkan kelewatan kontena, isu penghantaran, dan kekeliruan operasi.</p>
+                </div>
+                
+                <!-- Student Live Progress Stats -->
+                <div class="banner-stats">
+                    <div class="progress-header">
+                        <span>Kemajuan Belajar</span>
+                        <span id="banner-progress-percent">0%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="banner-progress-fill"></div>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-num" id="stat-overall-progress">0%</div>
+                            <div class="stat-lbl">Selesai</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-num" id="stat-quiz-score">-</div>
+                            <div class="stat-lbl">Skor Kuiz</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <main>
+            <div class="tabs-navigation">
+                <button class="tab-btn active" data-tab="tab-unit1">
+                    <span>1️⃣</span> Ciri Komunikasi Efektif
+                </button>
+                <button class="tab-btn" data-tab="tab-unit2">
+                    <span>2️⃣</span> Jenis Kemahiran
+                </button>
+                <button class="tab-btn" data-tab="tab-unit3">
+                    <span>3️⃣</span> Prinsip 7C Komunikasi
+                </button>
+                <button class="tab-btn" data-tab="tab-simulation">
+                    <span>🕹️</span> Cabaran Logistik (Simulasi)
+                </button>
+                <button class="tab-btn" data-tab="tab-quiz">
+                    <span>📝</span> Uji Minda
+                </button>
+            </div>
+
+            <!-- TAB 1: Ciri-Ciri Komunikasi Efektif -->
+            <div id="tab-unit1" class="tab-panel active">
+                <div class="card">
+                    <h2 class="card-title">Ciri-Ciri Komunikasi Perniagaan yang Efektif</h2>
+                    <p style="margin-bottom: 2rem; color: var(--text-muted);">Komunikasi yang berkesan memastikan mesej daripada pengirim difahami dengan tepat oleh penerima tanpa ada salah tafsir. Klik pada mana-mana ciri di bawah untuk melihat butiran nota dan contoh senario logistik.</p>
+                    
+                    <div class="grid-3">
+                        <div class="ciri-card" data-ciri="tujuan">
+                            <div class="ciri-badge">1</div>
+                            <div class="ciri-icon">🎯</div>
+                            <h3>Kejelasan Tujuan</h3>
+                            <p>Mempunyai matlamat khusus sebelum memulakan sesi komunikasi.</p>
+                        </div>
+                        <div class="ciri-card" data-ciri="kesempurnaan">
+                            <div class="ciri-badge">2</div>
+                            <div class="ciri-icon">📦</div>
+                            <h3>Kesempurnaan</h3>
+                            <p>Mesej lengkap merangkumi semua maklumat penting (5W1H).</p>
+                        </div>
+                        <div class="ciri-card" data-ciri="maklumbalas">
+                            <div class="ciri-badge">3</div>
+                            <div class="ciri-icon">🔄</div>
+                            <h3>Maklum Balas</h3>
+                            <p>Respon penerima untuk pengesahan mesej yang dua hala.</p>
+                        </div>
+                        <div class="ciri-card" data-ciri="empati">
+                            <div class="ciri-badge">4</div>
+                            <div class="ciri-icon">❤️</div>
+                            <h3>Empati</h3>
+                            <p>Memahami perasaan, situasi, and perspektif penerima mesej.</p>
+                        </div>
+                        <div class="ciri-card" data-ciri="menyesuaikan">
+                            <div class="ciri-badge">5</div>
+                            <div class="ciri-icon">👥</div>
+                            <h3>Menyesuaikan Maklumat</h3>
+                            <p>Mengubah nada dan bahasa mengikut latar belakang pendengar.</p>
+                        </div>
+                        <div class="ciri-card" data-ciri="saluran">
+                            <div class="ciri-badge">6</div>
+                            <div class="ciri-icon">📞</div>
+                            <h3>Saluran Pelbagai</h3>
+                            <p>Penggunaan lisan, bertulis, digital, visual, dan non-verbal.</p>
+                        </div>
+                        <div class="ciri-card" data-ciri="khabarangin">
+                            <div class="ciri-badge">7</div>
+                            <div class="ciri-icon">🗣️</div>
+                            <h3>Khabar Angin</h3>
+                            <p>Komunikasi tidak formal (grapevine) terkawal untuk menilai reaksi.</p>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Details Box (Controlled by JS) -->
+                    <div id="ciri-details-container" style="display: none;"></div>
+
+                    <!-- Grapevine / Khabar Angin Special Section -->
+                    <div class="grapevine-container">
+                        <div class="grapevine-header">
+                            <h3>🗣️ Interaksi Khabar Angin (Grapevine)</h3>
+                            <p>Khabar angin sering dilihat negatif, namun ia memainkan peranan penting secara tidak formal dalam syarikat logistik (contoh: di pantri gudang atau kumpulan WhatsApp pemandu lori).</p>
+                        </div>
+                        
+                        <div class="grapevine-interactive">
+                            <div class="grapevine-node">
+                                <div class="grapevine-avatar">👨‍✈️</div>
+                                <h4>Pak Abu</h4>
+                                <div class="role">Pemandu Lori</div>
+                                <div class="grapevine-speech">
+                                    "Dengar cerita laluan kastam di sempadan nak ditukar bulan depan..."
+                                </div>
+                            </div>
+                            
+                            <div class="grapevine-node">
+                                <div class="grapevine-avatar pink">👩‍💼</div>
+                                <h4>Cik Aimi</h4>
+                                <div class="role">Kerani Operasi Gudang</div>
+                                <div class="grapevine-speech">
+                                    "Eh, saya pun dengar juga. Pengurus tengah rancang sistem giliran syif malam baru ke?"
+                                </div>
+                            </div>
+                            
+                            <div class="grapevine-node">
+                                <div class="grapevine-avatar">🤵</div>
+                                <h4>Encik Harris</h4>
+                                <div class="role">Pengurus Logistik</div>
+                                <div class="grapevine-speech">
+                                    "Saya perlu pantau maklum balas tidak rasmi ini untuk jelaskan jadual sebenar dalam mesyuarat esok."
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="grapevine-effect-box">
+                            <h4>Mengapa Grapevine Penting dalam Pengurusan Komunikasi?</h4>
+                            <div class="grapevine-grid">
+                                <div class="grapevine-effect-item">⚡ Menyampaikan info dengan cepat</div>
+                                <div class="grapevine-effect-item">📈 Mengesan mood/emosi staf</div>
+                                <div class="grapevine-effect-item">🔗 Pelengkap mesej rasmi</div>
+                                <div class="grapevine-effect-item">🤝 Mengeratkan hubungan sosial</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="complete-btn-container" style="margin-top: 3rem;">
+                        <button class="btn btn-primary btn-complete-section" id="mark-unit1-complete">
+                            Tandakan Selesai
+                        </button>
+                        <button class="btn btn-secondary" id="btn-next-to-unit2" style="margin-left: 1rem;">
+                            Seterusnya: Unit 2 ➔
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: Jenis Kemahiran Komunikasi -->
+            <div id="tab-unit2" class="tab-panel">
+                <div class="card">
+                    <h2 class="card-title">Jenis-Jenis Kemahiran Komunikasi Perniagaan yang Efektif</h2>
+                    <p style="margin-bottom: 2rem; color: var(--text-muted);">Sebagai bakal graduan Sijil Logistik, anda perlu menguasai pelbagai jenis komunikasi mengikut tugasan. Klik kad di bawah untuk mendedahkan perincian dan tips praktikal bagi setiap kemahiran.</p>
+                    
+                    <div class="flip-grid">
+                        <!-- Interpersonal -->
+                        <div class="flip-card">
+                            <div class="flip-card-front">
+                                <div class="icon">🤝</div>
+                                <h3>Interpersonal</h3>
+                                <p>Komunikasi bersemuka antara dua individu untuk tujuan peribadi/operasi.</p>
+                                <div class="flip-hint">Klik untuk tips ➔</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <h3>Kemahiran Interpersonal</h3>
+                                <div class="flip-content-scroll">
+                                    <p>Berlaku antara dua individu (temuduga kerja, kaunseling staf, atau panggilan pelanggan).</p>
+                                    <p><strong>Ciri Utama:</strong></p>
+                                    <ul>
+                                        <li>Lebih bersifat peribadi dan fleksibel</li>
+                                        <li>Boleh dilakukan dalam kumpulan kecil (3-4 orang)</li>
+                                        <li>Membantu mewujudkan kepercayaan perniagaan</li>
+                                        <li>Melibatkan respons lisan & fizikal</li>
+                                    </ul>
+                                </div>
+                                <button class="btn btn-secondary btn-flip-back">Kembali</button>
+                            </div>
+                        </div>
+
+                        <!-- Pembentangan -->
+                        <div class="flip-card">
+                            <div class="flip-card-front">
+                                <div class="icon">📊</div>
+                                <h3>Pembentangan</h3>
+                                <p>Menyampaikan laporan operasi atau cadangan perniagaan kepada kumpulan.</p>
+                                <div class="flip-hint">Klik untuk tips ➔</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <h3>Kemahiran Pembentangan</h3>
+                                <div class="flip-content-scroll">
+                                    <p>Proses membentang maklumat secara lisan & visual bagi meyakinkan kumpulan sasaran.</p>
+                                    <p><strong>7 Tips Pembentangan Hebat:</strong></p>
+                                    <ul>
+                                        <li>1. Pembukaan yang menarik perhatian</li>
+                                        <li>2. Tampil penuh keyakinan</li>
+                                        <li>3. Penampilan kemas dan profesional</li>
+                                        <li>4. Suara dan sebutan jelas & mudah difahami</li>
+                                        <li>5. Padatkan maklumat utama (hadkan teks)</li>
+                                        <li>6. Gunakan hubungan mata & bahasa badan</li>
+                                        <li>7. Penutup dengan rumusan isi penting</li>
+                                    </ul>
+                                </div>
+                                <button class="btn btn-secondary btn-flip-back">Kembali</button>
+                            </div>
+                        </div>
+
+                        <!-- Pengucapan Awam -->
+                        <div class="flip-card">
+                            <div class="flip-card-front">
+                                <div class="icon">🎤</div>
+                                <h3>Pengucapan Awam</h3>
+                                <p>Menyampaikan ucapan berstruktur kepada lebih daripada 10 pendengar.</p>
+                                <div class="flip-hint">Klik untuk tips ➔</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <h3>Pengucapan Awam</h3>
+                                <div class="flip-content-scroll">
+                                    <p>Penyampaian formal kepada audiens yang ramai (ucapan perasmian gudang, penerangan dasar baru).</p>
+                                    <p><strong>Ciri Utama:</strong></p>
+                                    <ul>
+                                        <li>Terancang, formal, dan berstruktur</li>
+                                        <li>Audiens yang besar (biasa > 10 orang)</li>
+                                        <li>Pengucap bercakap tanpa gangguan</li>
+                                        <li>Sesi soal jawab di akhir ucapan sahaja</li>
+                                        <li>Memerlukan alat bantuan suara yang baik</li>
+                                    </ul>
+                                </div>
+                                <button class="btn btn-secondary btn-flip-back">Kembali</button>
+                            </div>
+                        </div>
+
+                        <!-- Tindak Balas -->
+                        <div class="flip-card">
+                            <div class="flip-card-front">
+                                <div class="icon">💬</div>
+                                <h3>Tindak Balas</h3>
+                                <p>Kemahiran membalas kata-kata bagi membina hubungan dua hala.</p>
+                                <div class="flip-hint">Klik untuk tips ➔</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <h3>Kemahiran Tindak Balas</h3>
+                                <div class="flip-content-scroll">
+                                    <p>Menggalakkan penglibatan penerima mesej dalam perbualan perniagaan.</p>
+                                    <p><strong>Komponen Utama:</strong></p>
+                                    <ul>
+                                        <li><strong>Penstrukturan:</strong> Menyediakan nada sesi rundingan</li>
+                                        <li><strong>Dorongan Minima:</strong> Anggukan, 'Mmm', 'Hmm', senyuman</li>
+                                        <li><strong>Mendengar Isi:</strong> Memahami tema utama klien</li>
+                                        <li><strong>Mendengar Perasaan:</strong> Refleksi emosi non-verbal</li>
+                                    </ul>
+                                </div>
+                                <button class="btn btn-secondary btn-flip-back">Kembali</button>
+                            </div>
+                        </div>
+
+                        <!-- Mendengar -->
+                        <div class="flip-card">
+                            <div class="flip-card-front">
+                                <div class="icon">👂</div>
+                                <h3>Mendengar</h3>
+                                <p>Memahami dan mentafsir mesej secara aktif lisan dan non-verbal.</p>
+                                <div class="flip-hint">Klik untuk tips ➔</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <h3>Kemahiran Mendengar</h3>
+                                <div class="flip-content-scroll">
+                                    <p>Fokus mental dan emosi untuk mentafsir mesej secara tepat.</p>
+                                    <p><strong>Ciri Pendengar Aktif:</strong></p>
+                                    <ul>
+                                        <li>Bertanya soalan jika kurang faham</li>
+                                        <li>Tenang, diam, dan memberi perhatian penuh</li>
+                                        <li>Memberikan tindak balas minima (angguk)</li>
+                                        <li>Boleh membuat rumusan semula isi penting</li>
+                                        <li>Meminta pengulangan kenyataan jika kabur</li>
+                                    </ul>
+                                </div>
+                                <button class="btn btn-secondary btn-flip-back">Kembali</button>
+                            </div>
+                        </div>
+
+                        <!-- Pengurusan Maklumat -->
+                        <div class="flip-card">
+                            <div class="flip-card-front">
+                                <div class="icon">💾</div>
+                                <h3>Pengurusan Maklumat</h3>
+                                <p>Keupayaan mengumpul, menilai, menyusun, dan menyimpan maklumat.</p>
+                                <div class="flip-hint">Klik untuk tips ➔</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <h3>Pengurusan Maklumat</h3>
+                                <div class="flip-content-scroll">
+                                    <p>Memastikan maklumat perniagaan sahih dan sedia digunakan pada bila-bila masa.</p>
+                                    <p><strong>Maklumat yang dihantar mestilah:</strong></p>
+                                    <ul>
+                                        <li><strong>Tepat:</strong> Bebas daripada kesalahan data</li>
+                                        <li><strong>Sahih:</strong> Bersumberkan rujukan sahih</li>
+                                        <li><strong>Relevan:</strong> Sesuai dengan keperluan</li>
+                                        <li><strong>Tersusun:</strong> Berstruktur kemas</li>
+                                        <li><strong>Mudah difahami:</strong> Tiada kekeliruan</li>
+                                    </ul>
+                                </div>
+                                <button class="btn btn-secondary btn-flip-back">Kembali</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Comparison Table Active vs Passive -->
+                    <div style="margin-top: 2rem;">
+                        <h3 style="margin-bottom: 1rem; font-family: var(--font-heading);">Perbezaan: Mendengar Aktif vs Mendengar Pasif</h3>
+                        <div class="table-container">
+                            <table class="lecturer-table">
+                                <thead>
+                                    <tr>
+                                        <th>Ciri Perbandingan</th>
+                                        <th style="background-color: var(--success-light); color: var(--success);">Mendengar Secara Aktif</th>
+                                        <th style="background-color: var(--error-light); color: var(--error);">Mendengar Secara Pasif</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Definisi</strong></td>
+                                        <td>Pendengar terlibat sepenuhnya & memberi tindak balas terhadap idea penyampai.</td>
+                                        <td>Pendengar tidak bertindak balas, hanya membiarkan bunyi masuk.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Aliran Komunikasi</strong></td>
+                                        <td>Dua hala (Two-way communication)</td>
+                                        <td>Sehala (One-way communication)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Reaksi Pendengar</strong></td>
+                                        <td>Menggunakan isyarat, soalan, komen, dan hubungan mata.</td>
+                                        <td>Tiada sebarang reaksi fizikal atau lisan.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Tahap Usaha</strong></td>
+                                        <td>Memerlukan fokus mental dan emosi yang tinggi.</td>
+                                        <td>Tidak memerlukan usaha langsung (hanya pasif).</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Aktiviti Terlibat</strong></td>
+                                        <td>Menganalisis, menilai, mencatat, dan meringkaskan mesej.</td>
+                                        <td>Hanya mendengar bunyi tanpa pemprosesan mendalam.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="complete-btn-container">
+                        <button class="btn btn-primary btn-complete-section" id="mark-unit2-complete">
+                            Tandakan Selesai
+                        </button>
+                        <button class="btn btn-secondary" id="btn-next-to-unit3" style="margin-left: 1rem;">
+                            Seterusnya: Unit 3 ➔
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: 7C Prinsip Komunikasi Efektif -->
+            <div id="tab-unit3" class="tab-panel">
+                <div class="card">
+                    <h2 class="card-title">7C Prinsip Komunikasi Perniagaan yang Efektif</h2>
+                    <p style="margin-bottom: 2rem; color: var(--text-muted);">Prinsip 7C ialah standard emas komunikasi perniagaan global. Klik setiap prinsip di bawah untuk mempelajari takrifan serta perbandingan contoh **Sebelum vs Selepas** e-mel logistik.</p>
+                    
+                    <!-- Completeness -->
+                    <div class="toggle-panel">
+                        <div class="toggle-header">
+                            <h3><span>1.</span> Completeness (Kesempurnaan / Lengkap)</h3>
+                            <div class="arrow">▼</div>
+                        </div>
+                        <div class="toggle-content">
+                            <p>Mesej harus mengandungi semua maklumat yang diperlukan oleh penerima untuk bertindak atau membuat keputusan tanpa memerlukan pertanyaan lanjut (menjawab 5W1H).</p>
+                            <div class="comparison-grid">
+                                <div class="comp-box">
+                                    <span class="comp-badge bad">Sebelum (Tidak Lengkap)</span>
+                                    <div class="comp-text">E-mel: "Sila ambil barang kat pelabuhan hari ini ya."</div>
+                                    <div class="comp-explanation"><strong>Kelemahan:</strong> Penerima tidak tahu gudang mana, barang jenis apa, nombor rujukan DO, lori saiz berapa, atau had masa operasi pelabuhan.</div>
+                                </div>
+                                <div class="comp-box better">
+                                    <span class="comp-badge good">Selepas (Lengkap)</span>
+                                    <div class="comp-text">E-mel: "Pak Abu, sila ke Gudang 3, Pelabuhan Klang sebelum jam 3:00 petang ini untuk mengambil 10 pallet bahan mentah kayu (DO #8892). Bawa dokumen pelepasan kastam yang dilampirkan."</div>
+                                    <div class="comp-explanation"><strong>Kelebihan:</strong> Menjawab apa, di mana, bila, siapa, dokumen rujukan, dan tindakan susulan yang dikehendaki dengan lengkap.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Conciseness -->
+                    <div class="toggle-panel">
+                        <div class="toggle-header">
+                            <h3><span>2.</span> Conciseness (Ringkas / Padat)</h3>
+                            <div class="arrow">▼</div>
+                        </div>
+                        <div class="toggle-content">
+                            <p>Mesej disampaikan secara ringkas, padat, dan terus kepada isu utama tanpa perkataan berlebihan yang membosankan dan melambatkan kefahaman.</p>
+                            <div class="comparison-grid">
+                                <div class="comp-box">
+                                    <span class="comp-badge bad">Sebelum (Meleret-leret)</span>
+                                    <div class="comp-text">E-mel: "Saya ingin menulis e-mel ini bagi pihak operasi untuk memberitahu pihak puan bahawa mesyuarat koordinasi pemandu kita yang dijadualkan esok pagi, kami rasa kami ingin maklumkan mesyuarat itu terpaksa ditunda kerana pengurus kami ada hal lain."</div>
+                                    <div class="comp-explanation"><strong>Kelemahan:</strong> Terlalu panjang lebar, melambatkan masa membaca, dan menggunakan kata pengisi yang tidak perlu.</div>
+                                </div>
+                                <div class="comp-box better">
+                                    <span class="comp-badge good">Selepas (Ringkas & Padat)</span>
+                                    <div class="comp-text">E-mel: "Mesyuarat koordinasi pemandu esok terpaksa ditunda kerana pengurus menghadiri mesyuarat luar. Tarikh baharu akan dimaklumkan petang ini."</div>
+                                    <div class="comp-explanation"><strong>Kelebihan:</strong> Terus kepada tujuan utama, menjimatkan masa, dan maklumat tetap disampaikan dengan jelas.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Consideration -->
+                    <div class="toggle-panel">
+                        <div class="toggle-header">
+                            <h3><span>3.</span> Consideration (Pertimbangan / Empati)</h3>
+                            <div class="arrow">▼</div>
+                        </div>
+                        <div class="toggle-content">
+                            <p>Mengambil kira latar belakang, emosi, keperluan, dan situasi penerima (mengamalkan 'You-attitude' berbanding 'I-attitude').</p>
+                            <div class="comparison-grid">
+                                <div class="comp-box">
+                                    <span class="comp-badge bad">Sebelum (Fokus Diri Sendiri)</span>
+                                    <div class="comp-text">E-mel: "Kami telah menghantar semua invois semalam. Kami mahukan pembayaran segera hari ini kerana kami mahu menutup akaun bulan ini."</div>
+                                    <div class="comp-explanation"><strong>Kelemahan:</strong> Pentingkan diri sendiri (I-attitude), mendesak tanpa bertimbang rasa dengan proses kelulusan kewangan pihak pelanggan.</div>
+                                </div>
+                                <div class="comp-box better">
+                                    <span class="comp-badge good">Selepas (Fokus Penerima)</span>
+                                    <div class="comp-text">E-mel: "Bagi membantu memudahkan urusan penutupan akaun bulanan syarikat tuan, kami amat menghargai sekiranya pembayaran invois yang dilampirkan dapat diproses sebelum jam 5 petang ini."</div>
+                                    <div class="comp-explanation"><strong>Kelebihan:</strong> Menunjukkan empati, menggunakan bahasa profesional yang sopan, dan mengutamakan faedah bersama.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Courtesy -->
+                    <div class="toggle-panel">
+                        <div class="toggle-header">
+                            <h3><span>4.</span> Courtesy (Kesopanan / Budi Bahasa)</h3>
+                            <div class="arrow">▼</div>
+                        </div>
+                        <div class="toggle-content">
+                            <p>Menggunakan nada bahasa yang menghormati, jujur, membina, dan positif serta mengelakkan bahasa yang menyinggung perasaan penerima.</p>
+                            <div class="comparison-grid">
+                                <div class="comp-box">
+                                    <span class="comp-badge bad">Sebelum (Kasar & Menyerang)</span>
+                                    <div class="comp-text">E-mel: "Laporan prestasi lori anda sangat lambat diserahkan. Jangan buat kerja gopoh dan tolong baiki kelakuan cuai anda."</div>
+                                    <div class="comp-explanation"><strong>Kelemahan:</strong> Bersifat peribadi, menyerang pekerja, dan menggunakan nada yang boleh merosakkan motivasi kerja.</div>
+                                </div>
+                                <div class="comp-box better">
+                                    <span class="comp-badge good">Selepas (Sopan & Membina)</span>
+                                    <div class="comp-text">E-mel: "Terima kasih atas usaha anda dalam projek ini. Kami percaya prestasi penghantaran lori boleh ditingkatkan dengan beberapa penyelarasan jadual, dan kami sedia membantu anda."</div>
+                                    <div class="comp-explanation"><strong>Kelebihan:</strong> Memberikan maklum balas membina dengan nada positif, membina hubungan jangka panjang yang kukuh.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Clarity -->
+                    <div class="toggle-panel">
+                        <div class="toggle-header">
+                            <h3><span>5.</span> Clarity (Kejelasan)</h3>
+                            <div class="arrow">▼</div>
+                        </div>
+                        <div class="toggle-content">
+                            <p>Mesej yang jelas, tidak mengelirukan, menggunakan bahasa yang mudah difahami, serta mengelakkan jargon teknikal melampau yang sukar bagi orang awam.</p>
+                            <div class="comparison-grid">
+                                <div class="comp-box">
+                                    <span class="comp-badge bad">Sebelum (Kabur & Jargon Tinggi)</span>
+                                    <div class="comp-text">E-mel: "Peralatan kontena ini diselaraskan mengikut paradigma integrasi pengoptimuman logistik rantaian nilai."</div>
+                                    <div class="comp-explanation"><strong>Kelemahan:</strong> Terlalu abstrak, menggunakan istilah jargon berbelit-belit yang membingungkan penerima biasa.</div>
+                                </div>
+                                <div class="comp-box better">
+                                    <span class="comp-badge good">Selepas (Jelas & Mudah)</span>
+                                    <div class="comp-text">E-mel: "Peralatan kontena baharu ini akan membantu operasi pembungkusan di gudang kita menjadi lebih cepat dan efisien."</div>
+                                    <div class="comp-explanation"><strong>Kelebihan:</strong> Menggunakan perkataan harian, mesej dapat difahami serta-merta tanpa kekeliruan.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Correctness -->
+                    <div class="toggle-panel">
+                        <div class="toggle-header">
+                            <h3><span>6.</span> Correctness (Ketepatan)</h3>
+                            <div class="arrow">▼</div>
+                        </div>
+                        <div class="toggle-content">
+                            <p>Memastikan fakta, ejaan, tatabahasa, tarikh, nombor kontena, dan data angka yang dihantar adalah tepat serta bebas dari sebarang kesilapan.</p>
+                            <div class="comparison-grid">
+                                <div class="comp-box">
+                                    <span class="comp-badge bad">Sebelum (Fakta/Angka Salah)</span>
+                                    <div class="comp-text">WhatsApp: "Esok kita hantar kontena tu. Mungkin dalam 15 Nov kut. Oh silap, 16 Nov."</div>
+                                    <div class="comp-explanation"><strong>Kelemahan:</strong> Data berubah-ubah, ejaan cuai, menjejaskan kredibiliti profesional ejen logistik.</div>
+                                </div>
+                                <div class="comp-box better">
+                                    <span class="comp-badge good">Selepas (Tepat & Sahih)</span>
+                                    <div class="comp-text">WhatsApp: "Status terkini: Kontena import (PI-889) dijadualkan dihantar ke premis tuan pada Khamis, 15 November 2026 jam 9:00 pagi."</div>
+                                    <div class="comp-explanation"><strong>Kelebihan:</strong> Maklumat lengkap dengan nombor kontena, tarikh, dan masa yang disahkan tepat.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Concreteness -->
+                    <div class="toggle-panel">
+                        <div class="toggle-header">
+                            <h3><span>7.</span> Concreteness (Ketegasan / Penekanan / Konkrit)</h3>
+                            <div class="arrow">▼</div>
+                        </div>
+                        <div class="toggle-content">
+                            <p>Mesej mestilah spesifik dan disokong oleh data, angka statistik, atau contoh konkrit, bukannya kenyataan yang abstrak atau terlalu umum.</p>
+                            <div class="comparison-grid">
+                                <div class="comp-box">
+                                    <span class="comp-badge bad">Sebelum (Umum & Samar)</span>
+                                    <div class="comp-text">E-mel: "Perniagaan penghantaran kita ada peningkatan yang agak ketara bulan lepas berbanding sebelumnya."</div>
+                                    <div class="comp-explanation"><strong>Kelemahan:</strong> Samar-samar. Berapa peningkatannya? Tiada pembuktian data operasi.</div>
+                                </div>
+                                <div class="comp-box better">
+                                    <span class="comp-badge good">Selepas (Konkrit & Berfakta)</span>
+                                    <div class="comp-text">E-mel: "Jumlah penghantaran kontena kita meningkat sebanyak 25% (iaitu 120 kontena) pada bulan September, berbanding 96 kontena pada bulan Ogos."</div>
+                                    <div class="comp-explanation"><strong>Kelebihan:</strong> Menunjukkan ketegasan prestasi dengan peratusan dan statistik yang boleh diukur.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="complete-btn-container">
+                        <button class="btn btn-primary btn-complete-section" id="mark-unit3-complete">
+                            Tandakan Selesai
+                        </button>
+                        <button class="btn btn-secondary" id="btn-next-to-sim" style="margin-left: 1rem;">
+                            Seterusnya: Simulasi ➔
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: Simulasi Cabaran Logistik -->
+            <div id="tab-simulation" class="tab-panel">
+                <div class="card" style="padding: 1.5rem;">
+                    <h2 class="card-title">🕹️ Simulasi Cabaran Komunikasi Logistik</h2>
+                    <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Selesaikan kes komunikasi yang sering berlaku dalam operasi logistik harian. Buat pilihan terbaik anda berdasarkan prinsip 7C bagi memuaskan hati pelanggan dan mengelakkan konflik gudang!</p>
+                    
+                    <!-- Simulation Interactive Box -->
+                    <div class="sim-container" id="sim-main-container">
+                        <div class="sim-header">
+                            <h3>Cabaran Eksekutif Logistik</h3>
+                            <span class="sim-badge" id="sim-step-indicator">Peringkat Operasi</span>
+                        </div>
+                        <div class="sim-body" id="sim-body-container">
+                            <div class="sim-sidebar">
+                                <div>
+                                    <h4 style="margin-bottom: 0.5rem; color: var(--text-dark);">Tugasan Simulasi</h4>
+                                    <div class="sim-objective" id="sim-objective-text">
+                                        Membalas mesej pelanggan yang marah tentang kelewatan kontena.
+                                    </div>
+                                </div>
+                                <div class="sim-score-box">
+                                    <div class="sim-score-num" id="sim-score-value">0</div>
+                                    <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">Markah Prestasi</div>
+                                </div>
+                            </div>
+                            <div class="sim-chat-area">
+                                <div class="sim-chat-history" id="sim-chat-history">
+                                    <!-- Messages go here dynamically -->
+                                </div>
+                                <div class="sim-options-area" id="sim-options-area">
+                                    <!-- Options go here dynamically -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 5: Ujian Minda (Quiz) -->
+            <div id="tab-quiz" class="tab-panel">
+                <div class="card">
+                    <h2 class="card-title">📝 Ujian Kefahaman Komunikasi Efektif</h2>
+                    <p style="margin-bottom: 2rem; color: var(--text-muted);">Jawab soalan di bawah untuk menilai kefahaman anda tentang Topik 4. Keputusan anda akan direkodkan dan boleh dipantau oleh pensyarah.</p>
+                    
+                    <!-- Quiz Score Container -->
+                    <div id="quiz-score-container" style="display: none;"></div>
+
+                    <!-- Dynamic Quiz Container -->
+                    <div id="quiz-questions-container"></div>
+
+                    <!-- Quiz Actions -->
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button class="btn btn-primary" id="btn-submit-quiz" style="padding: 0.8rem 2.5rem; font-size: 1rem;">
+                            Hantar Jawapan
+                        </button>
+                        <button class="btn btn-secondary" id="btn-reset-quiz" style="padding: 0.8rem 2.5rem; font-size: 1rem; display: none;">
+                            Ulangi Kuiz
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+
+
+        <!-- Footer -->
+        <footer>
+            <div style="max-width: 1200px; margin: 0 auto;">
+                <p>&copy; 2026 KomLogik SPL - Sijil Perkhidmatan Logistik. Dibuat dengan 💖 untuk kegunaan pendidikan interaktif.</p>
+                <p style="font-size: 0.7rem; margin-top: 0.5rem; color: var(--text-muted);">Dibina berasaskan sukatan pelajaran SPP20243/SPP20293 Asas Komunikasi Perniagaan</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Lecturer Modal Panel -->
+    <div class="modal" id="lecturer-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🎓 Panel Kawalan & Pemantauan Pensyarah</h2>
+                <button class="close-btn" id="btn-close-lecturer">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Class Overview Stats -->
+                <div class="lecturer-stats-grid">
+                    <div class="lecturer-stat-card">
+                        <div class="lecturer-stat-val" id="lecturer-total-students">7</div>
+                        <div class="lecturer-stat-lbl">Pelajar Berdaftar</div>
+                    </div>
+                    <div class="lecturer-stat-card">
+                        <div class="lecturer-stat-val" id="lecturer-avg-progress">82%</div>
+                        <div class="lecturer-stat-lbl">Purata Kemajuan Kelas</div>
+                    </div>
+                    <div class="lecturer-stat-card">
+                        <div class="lecturer-stat-val" id="lecturer-avg-score">85%</div>
+                        <div class="lecturer-stat-lbl">Purata Skor Kuiz</div>
+                    </div>
+                </div>
+
+                <!-- Student Progress Table -->
+                <h3 style="margin-bottom: 0.75rem; font-family: var(--font-heading);">Kemajuan Pelajar Sijil Logistik (SLK)</h3>
+                <div class="table-container">
+                    <table class="lecturer-table">
+                        <thead>
+                            <tr>
+                                <th>ID Pelajar</th>
+                                <th>Nama Pelajar</th>
+                                <th>Kemajuan</th>
+                                <th>Markah Kuiz</th>
+                                <th>Markah Simulasi</th>
+                                <th>Status</th>
+                                <th>Aktif Terakhir</th>
+                                <th style="text-align: center;">Tindakan</th> <!-- Lajur tindakan baru -->
+                            </tr>
+                        </thead>
+                        <tbody id="lecturer-students-list">
+                            <!-- Loaded dynamically via JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Settings and Reports Control -->
+                <div class="lecturer-settings">
+                    <h3 style="font-family: var(--font-heading); color: var(--text-dark); font-size: 1.1rem; margin-bottom: 1rem;">⚙️ Tetapan Dan Laporan Kelas</h3>
+                    <div class="setting-row">
+                        <span>Tetapkan Peratusan Minimum Lulus Kuiz:</span>
+                        <div class="setting-control">
+                            <input type="range" id="passing-mark-slider" min="50" max="100" step="5" value="70">
+                            <strong id="passing-mark-value">70%</strong>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; margin-top: 1.5rem; justify-content: flex-end;">
+                        <button class="btn btn-secondary" id="btn-export-csv">
+                            📊 Muat Turun Laporan (CSV)
+                        </button>
+                        <button class="btn btn-lecturer" id="btn-reset-class">
+                            🗑️ Set Semula Kelas
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HIDDEN PRINT LAYOUT (Used strictly to generate the notes PDF cleanly via html2pdf.js) -->
+    <div id="print-notes-template">
+        <!-- Page 1 -->
+        <div class="print-page">
+            <div class="pdf-header">
+                <div class="pdf-title">TOPIK 4: KEMAHIRAN KOMUNIKASI PERNIAGAAN YANG EFEKTIF</div>
+                <div class="pdf-meta">Sijil Perkhidmatan Logistik (SLK)</div>
+            </div>
+            
+            <div class="pdf-section">
+                <div class="pdf-section-title">4.1 Menerangkan Ciri-Ciri Komunikasi Perniagaan yang Efektif</div>
+                <div class="pdf-content">
+                    <p>Komunikasi berkesan bermakna mesej yang dihantar oleh pengirim dapat diterima, difahami dengan jelas dan tepat oleh penerima tanpa sebarang kekeliruan.</p>
+                    
+                    <p><strong>Ciri-Ciri Komunikasi Berkesan:</strong></p>
+                    <ul>
+                        <li><strong>Kejelasan Tujuan:</strong> Pengirim mempunyai matlamat khusus sebelum menyampaikan mesej. Ia mengelakkan kekeliruan, meningkatkan fokus, mempermudah tindakan dan mempercepatkan keputusan kerja.</li>
+                        <li><strong>Kesempurnaan (Completeness):</strong> Mesej mengandungi semua maklumat penting (apa, siapa, bila, di mana, bagaimana) supaya penerima tidak perlu membuat andaian tambahan.</li>
+                        <li><strong>Maklum Balas (Feedback):</strong> Respon penerima selepas menerima mesej untuk menunjukkan pemahaman, membetulkan salah faham, dan mewujudkan komunikasi dua hala.</li>
+                        <li><strong>Empati (Empathy):</strong> Keupayaan memahami situasi dan perasaan orang lain serta menggunakan nada yang sopan semasa berkomunikasi bagi mengurangkan konflik.</li>
+                        <li><strong>Menyesuaikan Maklumat:</strong> Mengubah gaya bahasa, nada, dan maklumat mengikut jawatan, tahap pendidikan, dan saluran komunikasi pendengar.</li>
+                        <li><strong>Saluran Pelbagai:</strong> Penggunaan lisan (panggilan telefon), bertulis (memo), digital (WhatsApp), visual (carta), dan non-verbal (bahasa badan).</li>
+                        <li><strong>Khabar Angin (Grapevine):</strong> Komunikasi tidak formal secara spontan antara pekerja yang berfungsi menyebarkan info dengan pantas dan menilai emosi/reaksi kakitangan.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pdf-section">
+                <div class="pdf-section-title">4.2 Jenis-Jenis Kemahiran Komunikasi Perniagaan yang Efektif</div>
+                <div class="pdf-content">
+                    <p>Terdapat beberapa kemahiran utama yang perlu dikuasai dalam organisasi perniagaan:</p>
+                    <ul>
+                        <li><strong>Kemahiran Komunikasi Interpersonal:</strong> Komunikasi berpasangan antara dua individu untuk tujuan peribadi/temuduga/kaunseling/rundingan.</li>
+                        <li><strong>Kemahiran Pembentangan:</strong> Proses membentangkan laporan/idea secara lisan & visual. Memerlukan persediaan (sebelum), persembahan mantap (semasa), dan maklum balas (selepas).</li>
+                        <li><strong>Kemahiran Pengucapan Awam:</strong> Ucapan berstruktur di majlis terbuka kepada lebih 10 orang tanpa gangguan semasa bercakap. Sesi soalan di hujung.</li>
+                        <li><strong>Kemahiran Tindak Balas:</strong> Kebolehan membalas percakapan (termasuk kemahiran penstrukturan nada, dorongan minima seperti mengangguk, 'Hmm'/'Mmm', dan mendengar isi serta perasaan).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Page 2 -->
+        <div class="print-page">
+            <div class="pdf-header">
+                <div class="pdf-title">TOPIK 4: KEMAHIRAN KOMUNIKASI PERNIAGAAN YANG EFEKTIF</div>
+                <div class="pdf-meta">Sijil Perkhidmatan Logistik (SLK)</div>
+            </div>
+            
+            <div class="pdf-section">
+                <div class="pdf-content">
+                    <ul>
+                        <li><strong>Kemahiran Mendengar:</strong> Keupayaan mentafsir mesej secara aktif (bertanya soalan, tenang, diam, membuat rumusan) berbanding pasif (mendengar sehala tanpa respon).</li>
+                        <li><strong>Kemahiran Pengurusan Maklumat:</strong> Keupayaan mengumpul, menyusun, menilai, menyimpan, dan menyampaikan maklumat secara tepat, sahih, dan relevan.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pdf-section">
+                <div class="pdf-section-title">4.3 Prinsip 7C Komunikasi Perniagaan yang Efektif</div>
+                <div class="pdf-content">
+                    <p>Setiap komunikasi bertulis mahupun lisan hendaklah mematuhi 7 prinsip utama:</p>
+                    
+                    <p><strong>1. Completeness (Kesempurnaan/Lengkap)</strong><br>
+                    Mesej mengandungi fakta lengkap supaya penerima boleh mengambil tindakan langsung.<br>
+                    <span style="font-style: italic; font-size: 11px;">Contoh Logistik: Menyertakan Nombor Kontena, Nombor DO, Tarikh, Masa, dan Dokumen Pelepasan semasa mengarah pemandu lori.</span></p>
+                    
+                    <p><strong>2. Conciseness (Ringkas / Padat)</strong><br>
+                    Fokus kepada inti pati mesej penting sahaja tanpa mengulang maklumat yang melambatkan pemahaman.</p>
+                    
+                    <p><strong>3. Consideration (Pertimbangan / Empati)</strong><br>
+                    Mengambil kira latar belakang, emosi, dan situasi penerima (menggunakan nada 'You-attitude' yang sopan).</p>
+                    
+                    <p><strong>4. Courtesy (Kesopanan / Ihsan / Budi Bahasa)</strong><br>
+                    Mesej mestilah bernada positif, tidak menyinggung atau menyerang emosi, serta menghormati pendengar.</p>
+                    
+                    <p><strong>5. Clarity (Kejelasan)</strong><br>
+                    Menggunakan bahasa yang mudah dan tepat, mengelakkan ayat berbelit-belit atau jargon teknikal yang mengelirukan.</p>
+                    
+                    <p><strong>6. Correctness (Ketepatan)</strong><br>
+                    Memastikan data angka, nombor rujukan, ejaan, dan tatabahasa adalah disemak sahih dan bebas dari ralat.</p>
+                    
+                    <p><strong>7. Concreteness (Ketegasan / Penekanan)</strong><br>
+                    Mesej disokong oleh data statistik atau fakta khusus yang boleh diukur untuk membuktikan kenyataan.<br>
+                    <span style="font-style: italic; font-size: 11px;">Contoh: 'Prestasi tepat masa Julai meningkat 25%' berbanding 'prestasi kita naik bulan lepas'.</span></p>
+                </div>
+            </div>
+            
+            <div class="pdf-section" style="margin-top: 30px; border-top: 1px solid #FF6B9B; padding-top: 10px; text-align: center;">
+                <p style="font-size: 10px; color: #5C5E76;">Nota Platform KomLogik SPL. Dihasilkan khas untuk Pelajar Sijil Perkhidmatan Logistik.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Script file link -->
+    <script>
+// Data for Ciri-ciri Komunikasi Efektif (Module 1)
+const ciriData = {
+    tujuan: {
+        title: "Kejelasan Tujuan (Clarity of Purpose)",
+        points: [
+            "Pengirim mempunyai matlamat yang jelas sebelum menyampaikan sesuatu mesej.",
+            "Menjawab persoalan: Mengapa mesej dihantar? Apakah tindakan yang diharapkan?",
+            "Mengelakkan kekeliruan penerima tanpa salah tafsir.",
+            "Meningkatkan fokus mesej agar lebih spesifik dan tidak meleret.",
+            "Mempermudahkan tindakan penerima mesej secara langsung.",
+            "Mempercepatkan proses membuat keputusan dalam organisasi logistik."
+        ],
+        scenario: "Logistik Hub: Sebelum menghantar e-mel penjadualan penghantaran kargo, pengurus menetapkan matlamat untuk mengarahkan ejen kastam melepaskan kontena nombor WH-882 hari ini."
+    },
+    kesempurnaan: {
+        title: "Kesempurnaan (Completeness)",
+        points: [
+            "Mesej yang lengkap merangkumi semua maklumat penting.",
+            "Penerima boleh memahami dan mengambil tindakan tanpa perlu bertanya semula.",
+            "Menjawab semua soalan penting: Siapa (Who), Apa (What), Bila (When), Di mana (Where), Mengapa (Why), Bagaimana (How).",
+            "Tiada fakta atau butiran penting yang tertinggal.",
+            "Arahan kerja mestilah jelas dan komprehensif."
+        ],
+        scenario: "Pengurus Gudang menghantar arahan kerja kepada pemandu lori: 'Pak Abu, sila ambil 5 pallet barangan perubatan (DO: #6678) di Gudang A, Pelabuhan Klang, esok pagi jam 9:00 pagi menggunakan lori 3 tan.'"
+    },
+    maklumbalas: {
+        title: "Maklum Balas (Feedback)",
+        points: [
+            "Respon atau reaksi daripada penerima selepas menerima mesej.",
+            "Menunjukkan sama ada mesej difahami, dipersetujui, atau memerlukan penjelasan lanjut.",
+            "Menjadikan proses komunikasi dua hala yang sihat.",
+            "Mengesahkan kefahaman dan membetulkan salah faham dengan cepat.",
+            "Meningkatkan kualiti komunikasi dan membina hubungan profesional.",
+            "Membantu pihak pengurusan membuat keputusan berdasarkan maklum balas pekerja."
+        ],
+        scenario: "Selepas sesi taklimat keselamatan gudang baharu, penyelia meminta pemandu forklif menyatakan jika ada kekeliruan, dan mereka mengesahkan pemahaman prosedur larian forklift."
+    },
+    empati: {
+        title: "Empati (Empathy)",
+        points: [
+            "Keupayaan memahami perasaan, perspektif, dan situasi orang lain.",
+            "Menyampaikan mesej dengan mengambil kira emosi dan keperluan penerima.",
+            "Mewujudkan hubungan kerja yang lebih harmoni dan mengurangkan konflik.",
+            "Meningkatkan kepuasan pelanggan melalui perkhidmatan yang prihatin.",
+            "Menggunakan nada sopan, profesional, dan meletakkan diri dalam situasi orang lain.",
+            "Mengelakkan kata-kata kasar atau tuduhan melulu."
+        ],
+        scenario: "Ejen perkapalan memohon maaf atas kelewatan kontena akibat cuaca ribut di laut, menjelaskan situasi kepada pelanggan dengan nada tenang, menawarkan penjejakan langsung kontena tersebut."
+    },
+    menyesuaikan: {
+        title: "Menyesuaikan Maklumat dengan Pendengar",
+        points: [
+            "Mesej disesuaikan berdasarkan latar belakang, jawatan, tahap pendidikan, dan pengalaman pendengar.",
+            "Mengubah gaya bahasa (formal untuk pelanggan/pengurusan, mudah difahami untuk pekerja operasi).",
+            "Memilih maklumat yang relevan sahaja bagi mengelakkan maklumat berlebihan.",
+            "Memperbetulkan nada mesej berdasarkan pendengar (nada sopan atau tegas profesional).",
+            "Memilih saluran komunikasi yang sesuai (panggilan telefon untuk kecemasan, e-mel untuk laporan rasmi)."
+        ],
+        scenario: "Seorang Eksekutif Logistik menerangkan status rantaian bekalan menggunakan rajah ringkas kepada pelanggan, tetapi menggunakan data analitik teknikal apabila membentang kepada Lembaga Pengarah."
+    },
+    saluran: {
+        title: "Saluran Komunikasi Pelbagai",
+        points: [
+            "Menggunakan lebih daripada satu medium untuk menyampaikan mesej dalam perniagaan.",
+            "Memastikan mesej sampai dengan cepat, tepat, dan berkesan.",
+            "Saluran Bertulis: Surat rasmi, memorandum, e-mel arahan.",
+            "Saluran Lisan: Panggilan telefon, mesyuarat mingguan, taklimat.",
+            "Saluran Digital: WhatsApp Business, Telegram, aplikasi logistik syarikat.",
+            "Saluran Visual: Infografik alur kerja gudang, graf prestasi bulanan.",
+            "Saluran Non-Verbal: Bahasa badan, ekspresi wajah, hubungan mata semasa berunding."
+        ],
+        scenario: "Makluman kecemasan tentang penutupan pelabuhan dihantar melalui SMS pantas, disusuli e-mel rasmi dengan pelan kontingensi pengalihan kargo."
+    },
+    khabarangin: {
+        title: "Penggunaan Khabar Angin (Grapevine Communication)",
+        points: [
+            "Komunikasi tidak formal yang berlaku secara spontan antara pekerja.",
+            "Biasanya melalui perbualan harian, sembang pantri, WhatsApp kumpulan tidak rasmi, atau gosip.",
+            "Peranan Positif: Menyampaikan maklumat dengan sangat cepat merentasi hierarki.",
+            "Membantu memberi gambaran mood, kegusaran, atau persepsi pekerja terhadap pengurusan.",
+            "Menjadi pelengkap kepada saluran komunikasi rasmi syarikat.",
+            "Mengeratkan hubungan sosial pekerja secara tidak rasmi.",
+            "Perlu dikendalikan secara terkawal oleh pengurusan bagi membetulkan gosip negatif."
+        ],
+        scenario: "Pihak pengurusan mendengar desas-desus pekerja risau tentang jadual giliran syif malam baharu di gudang, membolehkan pengurus merangka taklimat penjelasan rasmi sebelum ia menimbulkan mogok."
+    }
+};
+
+// Simulation Steps for Logistics Challenge
+const simSteps = [
+    {
+        npcMessage: "Salam, saya Aiman dari Syarikat Perabot Indah. Kontena bahan mentah kami (No: PI-772) sepatutnya sampai ke gudang kami kelmarin! Di mana barangan kami? Kami terpaksa tangguh pengeluaran disebabkan kelewatan ini!",
+        objective: "Objektif: Balas aduan pelanggan yang sedang marah tentang kelewatan kontena import menggunakan prinsip 7C (Kesopanan & Empati).",
+        options: [
+            {
+                text: "Saya tak tahu. Itu urusan syarikat perkapalan. Awak telefonlah mereka sendiri untuk semak. Bukan silap kami.",
+                score: 0,
+                feedback: "Sangat Lemah! Anda menyalahkan pihak lain dan tidak menunjukkan kesopanan (Courtesy) serta empati. Pelanggan akan bertambah marah.",
+                userSpeech: "Saya tak tahu. Itu urusan syarikat perkapalan. Awak telefonlah mereka sendiri untuk semak. Bukan silap kami."
+            },
+            {
+                text: "Kontena cik lewat sebab kapal rosak. Nanti kontena itu sampai saya maklumkan semula. Harap sabar.",
+                score: 5,
+                feedback: "Sederhana. Mesej ini ringkas (Conciseness) tetapi kurang lengkap (Completeness) dan tidak menunjukkan empati atau tindakan susulan yang kukuh.",
+                userSpeech: "Kontena cik lewat sebab kapal rosak. Nanti kontena itu sampai saya maklumkan semula. Harap sabar."
+            },
+            {
+                text: "Salam Cik Aiman, kami mohon maaf atas kelewatan kontena PI-772. Kapal MV Mega Cargo menghadapi masalah teknikal di Pelabuhan Klang. Kontena dijangka dilepaskan esok jam 10 pagi. Kami akan pantau pelepasan kastam dan hantar terus ke gudang cik. Terima kasih.",
+                score: 10,
+                feedback: "Terbaik! Mesej ini lengkap, ada kejelasan tujuan, memohon maaf dengan sopan, menerangkan punca secara tepat (Correctness), serta memberi jaminan pelan tindakan.",
+                userSpeech: "Salam Cik Aiman, mohon maaf atas kesulitan. Kontena PI-772 lewat kerana isu teknikal kapal MV Mega Cargo di Pelabuhan Klang. Kami jangka barang dilepaskan esok jam 10 pagi dan kami uruskan penghantaran segera ke gudang cik. Status terkini akan kami kemas kini tengah hari ini. Terima kasih."
+            }
+        ]
+    },
+    {
+        npcMessage: "Penyelia Gudang: 'Bos, kita kena hantar pemandu lori, Pak Abu, untuk ambil barangan elektronik penting kat gudang pelabuhan hari ni. Tolong hantar arahan kerja kat dia sekarang.'",
+        objective: "Objektif: Beri arahan kerja bertulis kepada pemandu lori dengan mengamalkan prinsip Kesempurnaan (Completeness) dan Kejelasan (Clarity).",
+        options: [
+            {
+                text: "Pak Abu, tolong pergi ambil barang elektrik kat Penang pelabuhan hari ni ya.",
+                score: 2,
+                feedback: "Kurang Butiran! Pak Abu tidak tahu gudang mana, barang apa, nombor rujukan dokumen (DO), atau masa yang ditetapkan.",
+                userSpeech: "Pak Abu, tolong pergi ambil barang elektrik kat Penang pelabuhan hari ni ya."
+            },
+            {
+                text: "Pak Abu, sila ke Gudang B, Pelabuhan Pulau Pinang sebelum jam 3:00 petang ini untuk mengambil 10 pallet barangan elektronik (DO #9982). Pastikan bawa dokumen kastam K4 yang asal. Terima kasih.",
+                score: 10,
+                feedback: "Sempurna! Arahan ini merangkumi butiran Apa (10 pallet barangan elektronik), Di mana (Gudang B, Pelabuhan Pulau Pinang), Bila (sebelum 3:00 petang), dokumen rujukan (DO #9982), dan dokumen kastam. Tiada maklumat tergantung.",
+                userSpeech: "Pak Abu, sila ambil kargo 10 pallet barangan elektronik (DO #9982) di Gudang B, Pelabuhan Pulau Pinang hari ini sebelum 3 petang. Pastikan bawa dokumen K4 yang saya letak di atas meja kaunter. Hubungi saya jika ada isu."
+            },
+            {
+                text: "Pak Abu, barang penting dah ready kat pelabuhan. Pergi ambil sekarang sebelum lori lain ambil dulu.",
+                score: 4,
+                feedback: "Gopoh! Maklumat ini mengelirukan dan tiada rujukan DO atau lokasi spesifik pelabuhan.",
+                userSpeech: "Pak Abu, barang penting dah ready kat pelabuhan. Pergi ambil sekarang sebelum lori lain ambil dulu."
+            }
+        ]
+    },
+    {
+        npcMessage: "Pengurus Besar (GM): 'Saya perlukan laporan ringkas tentang pencapaian penghantaran kontena kita pada bulan lepas untuk mesyuarat lembaga pengarah petang ini. Berikan data prestasi kita.'",
+        objective: "Objektif: Sampaikan maklumat prestasi operasi kepada pengurusan atasan mengikut prinsip Ketegasan (Concreteness) dan Ketepatan (Correctness).",
+        options: [
+            {
+                text: "Bulan lepas prestasi penghantaran kita sangat bagus bos. Kebanyakan kontena sampai tepat pada masanya dan pelanggan semuanya gembira.",
+                score: 2,
+                feedback: "Terlalu Umum! Tiada statistik atau fakta konkrit. Pihak pengurusan atasan memerlukan data angka bagi membuktikan kenyataan anda.",
+                userSpeech: "Bulan lepas prestasi penghantaran kita sangat bagus bos. Kebanyakan kontena sampai tepat pada masanya dan pelanggan semuanya gembira."
+            },
+            {
+                text: "Menurut data sistem bulanan, kadar penghantaran tepat pada masa (On-Time Delivery) bagi Julai 2026 ialah 94.2% berbanding sasaran 95%. Kelewatan berpunca daripada kesesakan kastam di pintu sempadan Bukit Kayu Hitam.",
+                score: 10,
+                feedback: "Luar Biasa! Maklumat ini sangat konkrit (menyertakan peratusan 94.2%), tepat (Julai 2026), membandingkan dengan sasaran, serta menyatakan punca kelewatan secara profesional.",
+                userSpeech: "Prestasi penghantaran Julai 2026 mencatat kadar On-Time Delivery sebanyak 94.2% berbanding sasaran KPI 95%. Faktor utama variasi adalah kelewatan pelepasan kastam di Bukit Kayu Hitam yang mengambil masa purata 4 jam berbanding biasa 2 jam."
+            },
+            {
+                text: "Bulan lepas ada sedikit masalah kelewatan lori tetapi kami dah selesaikan. Saya rasa peratusan tepat masa kita dalam lingkungan 90% ke atas kot.",
+                score: 4,
+                feedback: "Tidak Meyakinkan! Penggunaan perkataan 'rasanya' atau 'kot' menunjukkan anda tidak pasti dengan data anda, menjejaskan kredibiliti profesional.",
+                userSpeech: "Bulan lepas ada sedikit masalah kelewatan lori tetapi kami dah selesaikan. Saya rasa peratusan tepat masa kita dalam lingkungan 90% ke atas kot."
+            }
+        ]
+    }
+];
+
+// Database for Lecturer Panel (loaded dynamically from localStorage)
+let mockStudents = [];
+
+function loadStudentsList() {
+    const saved = localStorage.getItem("asas_kom_topik4_students_list");
+    if (saved) {
+        try {
+            mockStudents = JSON.parse(saved);
+        } catch (e) {
+            console.error("Error loading student database", e);
+            mockStudents = [];
+        }
+    } else {
+        mockStudents = [];
+    }
+}
+
+function saveStudentsList() {
+    localStorage.setItem("asas_kom_topik4_students_list", JSON.stringify(mockStudents));
+}
+
+// Initial load
+loadStudentsList();
+
+// Quiz Questions (Module 4)
+const quizQuestions = [
+    {
+        question: "1. Pengurus Logistik memaklumkan kepada pemandu bahawa mesyuarat diadakan bertujuan untuk 'menetapkan sasaran KPI penghantaran kontena bulanan'. Apakah ciri komunikasi berkesan yang dipamerkan di sini?",
+        options: [
+            { text: "Empati", value: "A" },
+            { text: "Kejelasan Tujuan", value: "B" },
+            { text: "Khabar Angin", value: "C" },
+            { text: "Maklum Balas", value: "D" }
+        ],
+        answer: "B",
+        explanation: "Kejelasan tujuan memastikan pengirim mempunyai matlamat yang jelas (iaitu menyatakan tujuan mesyuarat ditubuhkan) supaya penerima tidak keliru."
+    },
+    {
+        question: "2. E-mel arahan kerja logistik menghantar senarai tugas yang merangkumi: Nombor kontena, nama pemandu, tarikh pelepasan kastam, dan lokasi pelabuhan destinasi. Tindakan ini mematuhi prinsip:",
+        options: [
+            { text: "Kesempurnaan (Completeness)", value: "A" },
+            { text: "Ringkas (Conciseness)", value: "B" },
+            { text: "Budi Bahasa (Courtesy)", value: "C" },
+            { text: "Ketegasan (Concreteness)", value: "D" }
+        ],
+        answer: "A",
+        explanation: "Kesempurnaan bermakna mesej mengandungi semua butiran maklumat yang diperlukan (siapa, apa, bila, di mana) bagi mengelakkan andaian tambahan."
+    },
+    {
+        question: "3. Apakah perbezaan ketara antara Kemahiran Mendengar secara AKTIF dan PASIF?",
+        options: [
+            { text: "Mendengar aktif melibatkan komunikasi dua hala dengan memberi maklum balas dan pertanyaan, manakala mendengar pasif hanyalah komunikasi sehala tanpa respon.", value: "A" },
+            { text: "Mendengar aktif tidak memerlukan sebarang usaha berbanding mendengar pasif.", value: "B" },
+            { text: "Mendengar pasif memerlukan pendengar meringkaskan isi penting pembicara.", value: "C" },
+            { text: "Mendengar aktif hanya berlaku apabila menggunakan telefon sahaja.", value: "D" }
+        ],
+        answer: "A",
+        explanation: "Mendengar secara aktif memerlukan keterlibatan penuh, tindak balas non-verbal, ulasan, atau komen, manakala mendengar pasif hanyalah menerima maklumat tanpa bertindak balas."
+    },
+    {
+        question: "4. Apakah peranan positif khabar angin (grapevine communication) dalam persekitaran syarikat logistik?",
+        options: [
+            { text: "Menimbulkan pergaduhan antara pemandu forklift dan pengurus.", value: "A" },
+            { text: "Boleh digunakan untuk menyebarkan rahsia sulit syarikat kepada pesaing.", value: "B" },
+            { text: "Menyampaikan maklumat dengan sangat cepat serta memberi gambaran mood atau persepsi pekerja kepada pengurusan.", value: "C" },
+            { text: "Menggantikan sepenuhnya komunikasi bertulis seperti e-mel rasmi.", value: "D" }
+        ],
+        answer: "C",
+        explanation: "Khabar angin merupakan saluran komunikasi tidak formal yang menyebarkan info dengan cepat dan bertindak sebagai pengukur awal emosi atau kegusaran pekerja."
+    },
+    {
+        question: "5. 'Jualan kami meningkat sebanyak 25% pada bulan September berbanding bulan Ogos' berbanding dengan ayat 'Jualan kita ada peningkatan'. Prinsip 7C yang mana paling sesuai dikaitkan?",
+        options: [
+            { text: "Ringkas (Conciseness)", value: "A" },
+            { text: "Ketegasan/Penekanan (Concreteness)", value: "B" },
+            { text: "Kejelasan (Clarity)", value: "C" },
+            { text: "Pertimbangan (Consideration)", value: "D" }
+        ],
+        answer: "B",
+        explanation: "Prinsip Concreteness (Ketegasan/Penekanan) menuntut penggunaan data statistik atau fakta khusus yang boleh diukur untuk mengukuhkan kenyataan, mengelakkan kenyataan yang samar-samar."
+    }
+];
+
+// App State
+let appState = {
+    progress: {
+        unit1: false,
+        unit2: false,
+        unit3: false,
+        simulation: false,
+        quiz: false
+    },
+    simulation: {
+        currentStep: 0,
+        score: 0,
+        completed: false,
+        history: []
+    },
+    quiz: {
+        answers: Array(quizQuestions.length).fill(null),
+        submitted: false,
+        score: 0
+    },
+    passingMark: 70
+};
+
+// DOM Elements & Initialization
+document.addEventListener("DOMContentLoaded", () => {
+    // Initialize Login controls
+    setupLoginScreen();
+    
+    // Tab switching setup
+    setupTabs();
+    
+    // Module 1 (Ciri) setup
+    setupCiriInteractions();
+    
+    // Module 2 (Flip cards) setup
+    setupFlipCards();
+    
+    // Module 3 (Accordions) setup
+    setupAccordions();
+    
+    // Lecturer Control Panel setup
+    setupLecturerPanel();
+    
+    // Check buttons setup
+    setupGlobalEvents();
+});
+
+// Load app state from local storage based on active user
+function loadState() {
+    if (!currentUser.id) return;
+    const saved = localStorage.getItem(`asas_kom_topik4_state_${currentUser.id}`);
+    if (saved) {
+        try {
+            appState = JSON.parse(saved);
+        } catch (e) {
+            console.error("Error parsing saved state", e);
+        }
+    } else {
+        // Reset to default clean state for new user
+        appState = {
+            progress: { unit1: false, unit2: false, unit3: false, simulation: false, quiz: false },
+            simulation: { currentStep: 0, score: 0, completed: false, history: [] },
+            quiz: { answers: Array(quizQuestions.length).fill(null), submitted: false, score: 0 },
+            passingMark: 70
+        };
+    }
+}
+
+// Save state to local storage based on active user
+function saveState() {
+    if (currentUser.id) {
+        localStorage.setItem(`asas_kom_topik4_state_${currentUser.id}`, JSON.stringify(appState));
+    }
+    updateProgressUI();
+    updateActiveStudentMockProgress();
+}
+
+// Update the current user progress in the mock student database for the lecturer panel
+function updateActiveStudentMockProgress() {
+    if (!currentUser.id) return;
+    
+    let overallProgress = calculateOverallProgress();
+    let simScoreSum = appState.simulation.score;
+    let finalQuizScore = appState.quiz.submitted ? Math.round((appState.quiz.score / quizQuestions.length) * 100) : 0;
+    
+    // Find or update the user in the mock students database
+    let activeStudent = mockStudents.find(s => s.id === currentUser.id);
+    if (!activeStudent) {
+        activeStudent = {
+            id: currentUser.id,
+            name: currentUser.name,
+            progress: overallProgress,
+            quizScore: finalQuizScore,
+            simulationScore: simScoreSum,
+            lastActive: new Date().toISOString().replace('T', ' ').substring(0, 16)
+        };
+        mockStudents.unshift(activeStudent);
+    } else {
+        activeStudent.name = currentUser.name;
+        activeStudent.progress = overallProgress;
+        activeStudent.quizScore = finalQuizScore;
+        activeStudent.simulationScore = simScoreSum;
+        activeStudent.lastActive = new Date().toISOString().replace('T', ' ').substring(0, 16);
+    }
+    saveStudentsList();
+}
+
+// Calculate overall progress percentage
+function calculateOverallProgress() {
+    const parts = [
+        appState.progress.unit1,
+        appState.progress.unit2,
+        appState.progress.unit3,
+        appState.progress.simulation,
+        appState.progress.quiz
+    ];
+    const completed = parts.filter(Boolean).length;
+    return Math.round((completed / parts.length) * 100);
+}
+
+// Current Logged In User
+let currentUser = { id: null, name: null };
+
+// Load progress for mock students from localStorage if they have saved states
+function loadMockStudentsProgress() {
+    mockStudents.forEach(student => {
+        if (currentUser.id && student.id === currentUser.id) return;
+        
+        const saved = localStorage.getItem(`asas_kom_topik4_state_${student.id}`);
+        if (saved) {
+            try {
+                const state = JSON.parse(saved);
+                
+                // Calculate progress
+                const parts = [
+                    state.progress.unit1,
+                    state.progress.unit2,
+                    state.progress.unit3,
+                    state.progress.simulation,
+                    state.progress.quiz
+                ];
+                const completed = parts.filter(Boolean).length;
+                student.progress = Math.round((completed / parts.length) * 100);
+                
+                student.quizScore = state.quiz.submitted ? Math.round((state.quiz.score / quizQuestions.length) * 100) : 0;
+                student.simulationScore = state.simulation.score;
+            } catch (e) {
+                console.error("Error loading mock student progress", e);
+            }
+        } else {
+            // Setup default empty values if no state exists yet
+            student.progress = 0;
+            student.quizScore = 0;
+            student.simulationScore = 0;
+        }
+    });
+}
+
+// Login Student function
+function loginStudent(id, name) {
+    currentUser.id = id;
+    currentUser.name = name;
+    
+    // Save to localStorage session
+    localStorage.setItem("asas_kom_topik4_current_user", JSON.stringify(currentUser));
+    
+    // Add user or update user in mock students database
+    updateActiveStudentMockProgress();
+    
+    // Load student state
+    loadState();
+    
+    // Sync other mock students progress from localStorage
+    loadMockStudentsProgress();
+    
+    // Update badge in header
+    const badge = document.getElementById("current-user-badge");
+    if (badge) {
+        badge.textContent = `👤 ${name} (${id})`;
+        badge.style.display = "inline-flex";
+    }
+    
+    // Show logout button
+    const logoutBtn = document.getElementById("btn-logout");
+    if (logoutBtn) {
+        logoutBtn.style.display = "inline-flex";
+    }
+    
+    // Switch screens
+    document.getElementById("login-screen").style.display = "none";
+    document.getElementById("app-main-content").style.display = "block";
+    
+    // Reinitialize interactive elements for this user
+    initSimulation();
+    renderQuiz();
+    updateProgressUI();
+}
+
+// Logout Student function
+function logoutStudent() {
+    currentUser.id = null;
+    currentUser.name = null;
+    localStorage.removeItem("asas_kom_topik4_current_user");
+    
+    // Reset login inputs
+    document.getElementById("student-name").value = "";
+    document.getElementById("student-id").value = "";
+    
+    // Switch screens
+    document.getElementById("app-main-content").style.display = "none";
+    document.getElementById("login-screen").style.display = "flex";
+}
+
+// Setup Login screen bindings
+function setupLoginScreen() {
+    const loginSubmitBtn = document.getElementById("btn-login-submit");
+    if (loginSubmitBtn) {
+        loginSubmitBtn.addEventListener("click", () => {
+            let name = document.getElementById("student-name").value.trim();
+            let id = document.getElementById("student-id").value.trim().toUpperCase();
+            
+            if (!name) {
+                alert("Sila masukkan nama penuh anda.");
+                return;
+            }
+            if (!id) {
+                alert("Sila masukkan ID Pelajar anda.");
+                return;
+            }
+            
+            // Create user state in mock database if it doesn't exist
+            let existing = mockStudents.find(s => s.id === id);
+            if (!existing) {
+                mockStudents.push({
+                    id: id,
+                    name: name,
+                    progress: 0,
+                    quizScore: 0,
+                    simulationScore: 0,
+                    lastActive: new Date().toISOString().replace('T', ' ').substring(0, 16)
+                });
+                saveStudentsList();
+            }
+            
+            loginStudent(id, name);
+        });
+    }
+    
+    const logoutBtn = document.getElementById("btn-logout");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", logoutStudent);
+    }
+    
+    // Check if session exists in localStorage
+    const savedSession = localStorage.getItem("asas_kom_topik4_current_user");
+    if (savedSession) {
+        try {
+            const user = JSON.parse(savedSession);
+            loginStudent(user.id, user.name);
+        } catch (e) {
+            console.error("Error reading saved user session", e);
+            logoutStudent();
+        }
+    } else {
+        // Show login screen, hide main app
+        document.getElementById("app-main-content").style.display = "none";
+        document.getElementById("login-screen").style.display = "flex";
+    }
+}
+
+// Update progress bars and numbers across the page
+function updateProgressUI() {
+    const overallProgress = calculateOverallProgress();
+    
+    // Header banner progress fill
+    const bannerFill = document.getElementById("banner-progress-fill");
+    const bannerPercent = document.getElementById("banner-progress-percent");
+    if (bannerFill && bannerPercent) {
+        bannerFill.style.width = `${overallProgress}%`;
+        bannerPercent.textContent = `${overallProgress}%`;
+    }
+    
+    // Stats section
+    const statProgress = document.getElementById("stat-overall-progress");
+    if (statProgress) {
+        statProgress.textContent = `${overallProgress}%`;
+    }
+    
+    const statQuiz = document.getElementById("stat-quiz-score");
+    if (statQuiz) {
+        if (appState.quiz.submitted) {
+            const finalScore = Math.round((appState.quiz.score / quizQuestions.length) * 100);
+            statQuiz.textContent = `${finalScore}%`;
+            statQuiz.style.color = finalScore >= appState.passingMark ? "var(--success)" : "var(--error)";
+        } else {
+            statQuiz.textContent = "-";
+            statQuiz.style.color = "var(--primary-pink)";
+        }
+    }
+    
+    // Complete sections buttons statuses
+    const mark1Btn = document.getElementById("mark-unit1-complete");
+    if (mark1Btn) {
+        if (appState.progress.unit1) {
+            mark1Btn.textContent = "Selesai ✓";
+            mark1Btn.style.backgroundColor = "var(--success)";
+        } else {
+            mark1Btn.textContent = "Tandakan Selesai";
+            mark1Btn.style.backgroundColor = "var(--primary-pink)";
+        }
+    }
+    
+    const mark2Btn = document.getElementById("mark-unit2-complete");
+    if (mark2Btn) {
+        if (appState.progress.unit2) {
+            mark2Btn.textContent = "Selesai ✓";
+            mark2Btn.style.backgroundColor = "var(--success)";
+        } else {
+            mark2Btn.textContent = "Tandakan Selesai";
+            mark2Btn.style.backgroundColor = "var(--primary-pink)";
+        }
+    }
+    
+    const mark3Btn = document.getElementById("mark-unit3-complete");
+    if (mark3Btn) {
+        if (appState.progress.unit3) {
+            mark3Btn.textContent = "Selesai ✓";
+            mark3Btn.style.backgroundColor = "var(--success)";
+        } else {
+            mark3Btn.textContent = "Tandakan Selesai";
+            mark3Btn.style.backgroundColor = "var(--primary-pink)";
+        }
+    }
+}
+
+// Setup navigation tabs
+function setupTabs() {
+    const tabs = document.querySelectorAll(".tab-btn");
+    const panels = document.querySelectorAll(".tab-panel");
+    
+    tabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+            const target = tab.dataset.tab;
+            
+            tabs.forEach(t => t.classList.remove("active"));
+            panels.forEach(p => p.classList.remove("active"));
+            
+            tab.classList.add("active");
+            const activePanel = document.getElementById(target);
+            if (activePanel) {
+                activePanel.classList.add("active");
+            }
+            
+            // Scroll to the top of the tab content smoothly
+            window.scrollTo({
+                top: document.querySelector(".tabs-navigation").offsetTop - 100,
+                behavior: "smooth"
+            });
+        });
+    });
+}
+
+// Setup interactions for Ciri-ciri cards (Module 1)
+function setupCiriInteractions() {
+    const cards = document.querySelectorAll(".ciri-card");
+    const detailsContainer = document.getElementById("ciri-details-container");
+    
+    cards.forEach(card => {
+        card.addEventListener("click", () => {
+            const ciriKey = card.dataset.ciri;
+            const data = ciriData[ciriKey];
+            
+            if (!data) return;
+            
+            // Highlight selected card
+            cards.forEach(c => c.classList.remove("active-card"));
+            card.classList.add("active-card");
+            
+            // Render details
+            let pointsHtml = "";
+            data.points.forEach(point => {
+                pointsHtml += `<li>${point}</li>`;
+            });
+            
+            detailsContainer.innerHTML = `
+                <div class="ciri-details-box">
+                    <div class="ciri-details-title">
+                        <span>💡</span> ${data.title}
+                    </div>
+                    <div class="details-grid">
+                        <div class="details-list-box">
+                            <h4>Penerangan & Perincian</h4>
+                            <ul>
+                                ${pointsHtml}
+                            </ul>
+                        </div>
+                        <div class="example-box">
+                            <span class="logistics-scenario-tag">Senario Logistik / SLK</span>
+                            <h4>Contoh Pengaplikasian</h4>
+                            <p>"${data.scenario}"</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            detailsContainer.style.display = "block";
+            
+            // Smooth scroll to details box
+            detailsContainer.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        });
+    });
+    
+    // Click the first card as default
+    if (cards.length > 0) {
+        cards[0].click();
+    }
+}
+
+// Setup flip card logic (Module 2)
+function setupFlipCards() {
+    const cards = document.querySelectorAll(".flip-card");
+    
+    cards.forEach(card => {
+        card.addEventListener("click", (e) => {
+            // If user clicked the button to flip back, flip Y
+            if (e.target.classList.contains("btn-flip-back")) {
+                card.classList.remove("flipped");
+                e.stopPropagation();
+                return;
+            }
+            
+            // Otherwise toggle
+            card.classList.toggle("flipped");
+        });
+    });
+}
+
+// Setup accordions for 7C principles (Module 3)
+function setupAccordions() {
+    const panels = document.querySelectorAll(".toggle-panel");
+    
+    panels.forEach(panel => {
+        const header = panel.querySelector(".toggle-header");
+        header.addEventListener("click", () => {
+            const isActive = panel.classList.contains("active-panel");
+            
+            // Close all
+            panels.forEach(p => p.classList.remove("active-panel"));
+            
+            // Toggle clicked
+            if (!isActive) {
+                panel.classList.add("active-panel");
+            }
+        });
+    });
+    
+    // Open first by default
+    if (panels.length > 0) {
+        panels[0].classList.add("active-panel");
+    }
+}
+
+// Logistics Scenario Simulator logic
+function initSimulation() {
+    const chatHistory = document.getElementById("sim-chat-history");
+    const optionsArea = document.getElementById("sim-options-area");
+    const sidebarObjective = document.getElementById("sim-objective-text");
+    const scoreNum = document.getElementById("sim-score-value");
+    
+    if (appState.simulation.completed) {
+        showSimulationResult();
+        return;
+    }
+    
+    scoreNum.textContent = appState.simulation.score;
+    
+    // Clear chat and output first npc message
+    chatHistory.innerHTML = "";
+    optionsArea.innerHTML = "";
+    
+    const stepData = simSteps[appState.simulation.currentStep];
+    sidebarObjective.textContent = stepData.objective;
+    
+    // Add NPC message to chat
+    addChatMessage(stepData.npcMessage, "npc");
+    
+    // Display options
+    stepData.options.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "sim-option-btn";
+        btn.innerHTML = `<strong>Pilihan ${idx + 1}:</strong> ${opt.text}`;
+        btn.addEventListener("click", () => handleSimulationChoice(opt));
+        optionsArea.appendChild(btn);
+    });
+}
+
+function addChatMessage(text, sender) {
+    const chatHistory = document.getElementById("sim-chat-history");
+    const msg = document.createElement("div");
+    msg.className = `sim-message ${sender}`;
+    msg.textContent = text;
+    chatHistory.appendChild(msg);
+    chatHistory.scrollTop = chatHistory.scrollHeight;
+}
+
+function handleSimulationChoice(choice) {
+    const optionsArea = document.getElementById("sim-options-area");
+    optionsArea.innerHTML = ""; // Disable choices immediately
+    
+    // Add user speech to chat
+    addChatMessage(choice.userSpeech, "user");
+    
+    // Add feedback after short delay
+    setTimeout(() => {
+        addChatMessage(choice.feedback, "feedback");
+        
+        // Update score
+        appState.simulation.score += choice.score;
+        document.getElementById("sim-score-value").textContent = appState.simulation.score;
+        
+        // Setup next button
+        const nextBtn = document.createElement("button");
+        nextBtn.className = "btn btn-primary";
+        nextBtn.style.marginTop = "1rem";
+        nextBtn.style.width = "100%";
+        nextBtn.innerHTML = appState.simulation.currentStep < simSteps.length - 1 ? "Seterusnya ➔" : "Lihat Keputusan ➔";
+        
+        nextBtn.addEventListener("click", () => {
+            appState.simulation.currentStep++;
+            if (appState.simulation.currentStep < simSteps.length) {
+                initSimulation();
+            } else {
+                appState.simulation.completed = true;
+                appState.progress.simulation = true;
+                saveState();
+                showSimulationResult();
+            }
+        });
+        
+        optionsArea.appendChild(nextBtn);
+    }, 800);
+}
+
+function showSimulationResult() {
+    const chatBody = document.getElementById("sim-body-container");
+    const totalScore = appState.simulation.score;
+    const maxScore = simSteps.length * 10;
+    const percent = Math.round((totalScore / maxScore) * 100);
+    
+    let heading = "Hebat! Anda adalah Eksekutif Logistik yang Cemerlang!";
+    let desc = "Komunikasi anda sangat berkesan dan mencerminkan standard profesional 7C dalam industri logistik. Maklum balas kerja lengkap dan memuaskan pelanggan.";
+    let icon = "🏆";
+    
+    if (percent < 50) {
+        heading = "Cubaan yang Baik, Perlu Lebih Latihan";
+        desc = "Sesetengah komunikasi anda agak kasar atau tidak lengkap. Pelanggan atau pemandu lori mungkin keliru dengan arahan anda. Cuba lagi untuk skor sempurna!";
+        icon = "✍️";
+    } else if (percent < 80) {
+        heading = "Sangat Baik! Hampir Sempurna!";
+        desc = "Kemahiran komunikasi anda kukuh, namun terdapat butiran kecil yang boleh diperbaiki untuk memastikan kelancaran rantaian bekalan logistik syarikat.";
+        icon = "⭐";
+    }
+    
+    chatBody.innerHTML = `
+        <div class="sim-result-screen">
+            <div class="sim-result-icon">${icon}</div>
+            <h2>${heading}</h2>
+            <p style="margin: 1rem 0; max-width: 600px; color: var(--text-muted);">${desc}</p>
+            <div style="background-color: var(--pastel-blue); padding: 1.5rem 3rem; border-radius: var(--radius-md); margin-bottom: 2rem; border: 1px solid var(--baby-blue);">
+                <div style="font-size: 0.9rem; color: var(--text-dark); font-weight: 600;">Jumlah Skor Anda:</div>
+                <div style="font-size: 3rem; font-weight: 800; color: var(--primary-pink);">${totalScore} / ${maxScore}</div>
+                <div style="font-size: 1rem; color: var(--dark-blue); font-weight: 700;">Gred Kebolehan: ${percent}%</div>
+            </div>
+            <button class="btn btn-primary" id="btn-restart-sim">Ulangi Simulasi</button>
+        </div>
+    `;
+    
+    document.getElementById("btn-restart-sim").addEventListener("click", () => {
+        appState.simulation.currentStep = 0;
+        appState.simulation.score = 0;
+        appState.simulation.completed = false;
+        appState.progress.simulation = false;
+        saveState();
+        
+        // Restore simulation body layout
+        chatBody.innerHTML = `
+            <div class="sim-body">
+                <div class="sim-sidebar">
+                    <div>
+                        <h4 style="margin-bottom: 0.5rem; color: var(--text-dark);">Tugasan Simulasi</h4>
+                        <div class="sim-objective" id="sim-objective-text">Objektif: Selesaikan aduan kontena lewat.</div>
+                    </div>
+                    <div class="sim-score-box">
+                        <div class="sim-score-num" id="sim-score-value">0</div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">Markah Prestasi</div>
+                    </div>
+                </div>
+                <div class="sim-chat-area">
+                    <div class="sim-chat-history" id="sim-chat-history"></div>
+                    <div class="sim-options-area" id="sim-options-area"></div>
+                </div>
+            </div>
+        `;
+        initSimulation();
+    });
+}
+
+// Render and setup Quiz
+function renderQuiz() {
+    const container = document.getElementById("quiz-questions-container");
+    if (!container) return;
+    
+    container.innerHTML = "";
+    
+    quizQuestions.forEach((q, qIdx) => {
+        const questionCard = document.createElement("div");
+        questionCard.className = "quiz-card";
+        questionCard.id = `quiz-card-${qIdx}`;
+        
+        let optionsHtml = "";
+        q.options.forEach(opt => {
+            const isSelected = appState.quiz.answers[qIdx] === opt.value;
+            let optionClass = "quiz-option";
+            if (isSelected) optionClass += " selected";
+            
+            if (appState.quiz.submitted) {
+                if (opt.value === q.answer) {
+                    optionClass += " correct";
+                } else if (isSelected) {
+                    optionClass += " incorrect";
+                }
+            }
+            
+            optionsHtml += `
+                <div class="${optionClass}" data-qidx="${qIdx}" data-val="${opt.value}">
+                    <span class="quiz-option-letter">${opt.value}</span>
+                    <span style="font-size: 0.9rem;">${opt.text}</span>
+                </div>
+            `;
+        });
+        
+        let feedbackClass = "quiz-feedback";
+        let feedbackText = "";
+        if (appState.quiz.submitted) {
+            feedbackClass += " show";
+            const isCorrect = appState.quiz.answers[qIdx] === q.answer;
+            feedbackClass += isCorrect ? " correct-feedback" : " incorrect-feedback";
+            feedbackText = `<strong>${isCorrect ? "Betul! ✓" : "Salah ✗"}</strong> - ${q.explanation}`;
+        }
+        
+        questionCard.innerHTML = `
+            <div class="quiz-question-num">SOALAN ${qIdx + 1}</div>
+            <div class="quiz-question-text">${q.question}</div>
+            <div class="quiz-options-list">${optionsHtml}</div>
+            <div class="${feedbackClass}">${feedbackText}</div>
+        `;
+        
+        container.appendChild(questionCard);
+    });
+    
+    // Add event listeners to options (only if not submitted)
+    if (!appState.quiz.submitted) {
+        document.querySelectorAll(".quiz-option").forEach(opt => {
+            opt.addEventListener("click", () => {
+                const qIdx = parseInt(opt.dataset.qidx);
+                const val = opt.dataset.val;
+                
+                // Save answer
+                appState.quiz.answers[qIdx] = val;
+                
+                // Visual toggle
+                const card = document.getElementById(`quiz-card-${qIdx}`);
+                card.querySelectorAll(".quiz-option").forEach(o => o.classList.remove("selected"));
+                opt.classList.add("selected");
+                
+                saveState();
+                checkQuizCompletionStatus();
+            });
+        });
+    }
+    
+    // Setup quiz buttons
+    const btnSubmit = document.getElementById("btn-submit-quiz");
+    const btnReset = document.getElementById("btn-reset-quiz");
+    const scoreBox = document.getElementById("quiz-score-container");
+    
+    if (appState.quiz.submitted) {
+        btnSubmit.style.display = "none";
+        btnReset.style.display = "inline-flex";
+        
+        const finalScore = Math.round((appState.quiz.score / quizQuestions.length) * 100);
+        scoreBox.innerHTML = `
+            <div style="background-color: ${finalScore >= appState.passingMark ? "var(--success-light)" : "var(--error-light)"}; border: 2px solid ${finalScore >= appState.passingMark ? "var(--success)" : "var(--error)"}; padding: 1.5rem; border-radius: var(--radius-md); text-align: center; max-width: 400px; margin: 0 auto 1.5rem auto;">
+                <h3 style="color: ${finalScore >= appState.passingMark ? "var(--success)" : "var(--error)"}">${finalScore >= appState.passingMark ? "Tahniah! Anda Lulus!" : "Sila Cuba Lagi!"}</h3>
+                <div style="font-size: 2.5rem; font-weight: 800; margin: 0.5rem 0;">${appState.quiz.score} / ${quizQuestions.length}</div>
+                <div style="font-size: 0.9rem; color: var(--text-dark); font-weight: 600;">Peratusan: ${finalScore}% (Markah Lulus: ${appState.passingMark}%)</div>
+            </div>
+        `;
+        scoreBox.style.display = "block";
+    } else {
+        btnSubmit.style.display = "inline-flex";
+        btnReset.style.display = "none";
+        scoreBox.style.display = "none";
+        checkQuizCompletionStatus();
+    }
+}
+
+function checkQuizCompletionStatus() {
+    const allAnswered = appState.quiz.answers.every(ans => ans !== null);
+    const btnSubmit = document.getElementById("btn-submit-quiz");
+    if (btnSubmit) {
+        btnSubmit.disabled = !allAnswered;
+        btnSubmit.style.opacity = allAnswered ? "1" : "0.5";
+        btnSubmit.style.cursor = allAnswered ? "pointer" : "not-allowed";
+    }
+}
+
+function submitQuiz() {
+    if (appState.quiz.submitted) return;
+    
+    let correctCount = 0;
+    quizQuestions.forEach((q, idx) => {
+        if (appState.quiz.answers[idx] === q.answer) {
+            correctCount++;
+        }
+    });
+    
+    appState.quiz.submitted = true;
+    appState.quiz.score = correctCount;
+    appState.progress.quiz = true;
+    
+    saveState();
+    renderQuiz();
+    
+    // Smooth scroll to score container
+    document.getElementById("quiz-score-container").scrollIntoView({ behavior: "smooth" });
+}
+
+function resetQuiz() {
+    appState.quiz.answers = Array(quizQuestions.length).fill(null);
+    appState.quiz.submitted = false;
+    appState.quiz.score = 0;
+    appState.progress.quiz = false;
+    
+    saveState();
+    renderQuiz();
+}
+
+// Lecturer Control Panel
+function setupLecturerPanel() {
+    const modal = document.getElementById("lecturer-modal");
+    const openBtn = document.getElementById("btn-open-lecturer");
+    const loginOpenBtn = document.getElementById("btn-login-open-lecturer");
+    const closeBtn = document.getElementById("btn-close-lecturer");
+    
+    if (openBtn) {
+        openBtn.addEventListener("click", () => {
+            updateActiveStudentMockProgress();
+            renderLecturerData();
+            modal.classList.add("active");
+        });
+    }
+    
+    if (loginOpenBtn) {
+        loginOpenBtn.addEventListener("click", () => {
+            updateActiveStudentMockProgress();
+            renderLecturerData();
+            modal.classList.add("active");
+        });
+    }
+    
+    if (closeBtn) {
+        closeBtn.addEventListener("click", () => {
+            modal.classList.remove("active");
+        });
+    }
+    
+    // Click outside modal content to close
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            modal.classList.remove("active");
+        }
+    });
+    
+    // Passing mark slider setting listener
+    const passingSlider = document.getElementById("passing-mark-slider");
+    const passingVal = document.getElementById("passing-mark-value");
+    if (passingSlider && passingVal) {
+        passingSlider.value = appState.passingMark;
+        passingVal.textContent = `${appState.passingMark}%`;
+        
+        passingSlider.addEventListener("input", (e) => {
+            appState.passingMark = parseInt(e.target.value);
+            passingVal.textContent = `${appState.passingMark}%`;
+            saveState();
+            // Re-render quiz if submitted to update success/fail colors
+            if (appState.quiz.submitted) {
+                renderQuiz();
+            }
+        });
+    }
+    
+    // CSV Export button
+    const csvBtn = document.getElementById("btn-export-csv");
+    if (csvBtn) {
+        csvBtn.addEventListener("click", exportLecturerCSV);
+    }
+    
+    // Reset class data button
+    const resetClassBtn = document.getElementById("btn-reset-class");
+    if (resetClassBtn) {
+        resetClassBtn.addEventListener("click", () => {
+            if (confirm("Adakah anda pasti mahu menetapkan semula kemajuan seluruh kelas? Semua rekod progress pelajar akan diset semula ke 0%.")) {
+                const resetState = {
+                    progress: { unit1: false, unit2: false, unit3: false, simulation: false, quiz: false },
+                    simulation: { currentStep: 0, score: 0, completed: false, history: [] },
+                    quiz: { answers: Array(quizQuestions.length).fill(null), submitted: false, score: 0 },
+                    passingMark: 70
+                };
+                mockStudents.forEach(student => {
+                    localStorage.setItem(`asas_kom_topik4_state_${student.id}`, JSON.stringify(resetState));
+                });
+                localStorage.removeItem("asas_kom_topik4_current_user");
+                localStorage.removeItem("asas_kom_topik4_students_list");
+                
+                // Reload location to reset layout cleanly
+                window.location.reload();
+            }
+        });
+    }
+}
+
+// Global individual student reset function exposed to window
+window.resetIndividualStudent = function(studentId) {
+    if (confirm(`Adakah anda pasti mahu menetapkan semula kemajuan untuk pelajar ${studentId}?`)) {
+        const resetState = {
+            progress: { unit1: false, unit2: false, unit3: false, simulation: false, quiz: false },
+            simulation: { currentStep: 0, score: 0, completed: false, history: [] },
+            quiz: { answers: Array(quizQuestions.length).fill(null), submitted: false, score: 0 },
+            passingMark: 70
+        };
+        localStorage.setItem(`asas_kom_topik4_state_${studentId}`, JSON.stringify(resetState));
+        
+        // If this is the currently logged in student, load the reset state live
+        if (currentUser.id === studentId) {
+            appState = resetState;
+            initSimulation();
+            renderQuiz();
+            saveState();
+        } else {
+            // Otherwise, update the mock database array item
+            const s = mockStudents.find(student => student.id === studentId);
+            if (s) {
+                s.progress = 0;
+                s.quizScore = 0;
+                s.simulationScore = 0;
+            }
+        }
+        
+        saveStudentsList();
+        renderLecturerData();
+        alert(`Kemajuan pelajar ${studentId} telah diset semula ke 0%.`);
+    }
+};
+
+function renderLecturerData() {
+    const tableBody = document.getElementById("lecturer-students-list");
+    const avgProgress = document.getElementById("lecturer-avg-progress");
+    const avgScore = document.getElementById("lecturer-avg-score");
+    const totalStudentsEl = document.getElementById("lecturer-total-students");
+    
+    if (!tableBody) return;
+    
+    // Clear
+    tableBody.innerHTML = "";
+    
+    // Reload mock students live progress from localStorage before rendering
+    loadMockStudentsProgress();
+    
+    let totalProgress = 0;
+    let totalQuizScore = 0;
+    let studentsWithQuiz = 0;
+    
+    mockStudents.forEach(student => {
+        totalProgress += student.progress;
+        if (student.quizScore > 0 || student.progress === 100) {
+            totalQuizScore += student.quizScore;
+            studentsWithQuiz++;
+        }
+        
+        const isPassed = student.quizScore >= appState.passingMark;
+        const statusClass = student.progress === 100 ? "complete" : "in-progress";
+        const statusText = student.progress === 100 ? "Selesai" : "Sedang Belajar";
+        
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td><strong>${student.id}</strong></td>
+            <td>${student.name}</td>
+            <td>
+                <div style="display:flex; align-items:center; gap:0.5rem;">
+                    <div class="progress-bar-container" style="width:70px; height:8px; margin-bottom:0;">
+                        <div class="progress-bar-fill" style="width:${student.progress}%;"></div>
+                    </div>
+                    <span>${student.progress}%</span>
+                </div>
+            </td>
+            <td>
+                <span style="font-weight:700; color: ${isPassed ? "var(--success)" : "var(--error)"}">
+                    ${student.quizScore}%
+                </span>
+            </td>
+            <td>${student.simulationScore} pts</td>
+            <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+            <td><small>${student.lastActive}</small></td>
+            <td style="text-align: center;">
+                <button class="btn-reset-single" onclick="resetIndividualStudent('${student.id}')">
+                    🔄 Reset
+                </button>
+            </td>
+        `;
+        tableBody.appendChild(row);
+    });
+    
+    // Update overview numbers
+    totalStudentsEl.textContent = mockStudents.length;
+    avgProgress.textContent = mockStudents.length > 0 ? `${Math.round(totalProgress / mockStudents.length)}%` : "0%";
+    avgScore.textContent = studentsWithQuiz > 0 ? `${Math.round(totalQuizScore / studentsWithQuiz)}%` : "0%";
+}
+
+function exportLecturerCSV() {
+    let csvContent = "data:text/csv;charset=utf-8,";
+    csvContent += "ID Pelajar,Nama Pelajar,Kemajuan (%),Skor Kuiz (%),Markah Simulasi,Status,Aktif Terakhir\n";
+    
+    mockStudents.forEach(s => {
+        const status = s.progress === 100 ? "Selesai" : "Sedang Belajar";
+        csvContent += `"${s.id}","${s.name}",${s.progress},${s.quizScore},${s.simulationScore},"${status}","${s.lastActive}"\n`;
+    });
+    
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `Prestasi_Pelajar_Komunikasi_Perniagaan_Topik_4.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+// Download notes in PDF format
+function generatePDF() {
+    const element = document.getElementById("print-notes-template");
+    if (!element) return;
+    
+    // Show spinner or modal loading if necessary
+    const downloadBtn = document.getElementById("btn-download-pdf");
+    const originalText = downloadBtn.innerHTML;
+    downloadBtn.innerHTML = "⏳ Menjana PDF...";
+    downloadBtn.disabled = true;
+
+    // Check if html2pdf library is loaded (handles offline or sandbox environment gracefully)
+    if (typeof html2pdf === 'undefined') {
+        alert("Peringatan: Perpustakaan PDF luar tidak dimuatkan (kemungkinan tiada internet). Sistem akan membuka menu cetakan pelayar anda. Sila pilih 'Simpan sebagai PDF' (Save as PDF) dalam pilihan pencetak untuk memuat turun.");
+        window.print();
+        downloadBtn.innerHTML = originalText;
+        downloadBtn.disabled = false;
+        return;
+    }
+    
+    // Configure html2pdf options
+    const opt = {
+        margin:       10,
+        filename:     'TOPIK_4_KEMAHIRAN_KOMUNIKASI_EFEKTIF.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak:    { mode: ['avoid-all', 'css'] }
+    };
+    
+    // Temporary toggle block visibility for html2pdf rendering
+    element.style.display = "block";
+    
+    // Generate PDF and then hide template again
+    html2pdf().set(opt).from(element).save().then(() => {
+        element.style.display = "none";
+        downloadBtn.innerHTML = originalText;
+        downloadBtn.disabled = false;
+        
+        // Track PDF download as part of overall progress
+        // Trigger a notification or confirmation
+        alert("Nota berjaya dimuat turun dalam format PDF!");
+    }).catch(err => {
+        console.error("PDF generation error", err);
+        element.style.display = "none";
+        downloadBtn.innerHTML = originalText;
+        downloadBtn.disabled = false;
+        alert("Gagal memuat turun PDF. Sila cuba lagi.");
+    });
+}
+
+// Global setups and other buttons checking
+function setupGlobalEvents() {
+    // Setups for Unit 1, 2, and 3 Mark Completed button
+    const mark1Btn = document.getElementById("mark-unit1-complete");
+    if (mark1Btn) {
+        mark1Btn.addEventListener("click", () => {
+            appState.progress.unit1 = !appState.progress.unit1;
+            saveState();
+        });
+    }
+    
+    const mark2Btn = document.getElementById("mark-unit2-complete");
+    if (mark2Btn) {
+        mark2Btn.addEventListener("click", () => {
+            appState.progress.unit2 = !appState.progress.unit2;
+            saveState();
+        });
+    }
+    
+    const mark3Btn = document.getElementById("mark-unit3-complete");
+    if (mark3Btn) {
+        mark3Btn.addEventListener("click", () => {
+            appState.progress.unit3 = !appState.progress.unit3;
+            saveState();
+        });
+    }
+    
+    // Quiz buttons
+    const btnSubmit = document.getElementById("btn-submit-quiz");
+    if (btnSubmit) {
+        btnSubmit.addEventListener("click", submitQuiz);
+    }
+    
+    const btnReset = document.getElementById("btn-reset-quiz");
+    if (btnReset) {
+        btnReset.addEventListener("click", resetQuiz);
+    }
+    
+    // PDF download
+    const pdfBtn = document.getElementById("btn-download-pdf");
+    if (pdfBtn) {
+        pdfBtn.addEventListener("click", generatePDF);
+    }
+    
+    // Next sections triggers in tabs
+    const nextToUnit2 = document.getElementById("btn-next-to-unit2");
+    if (nextToUnit2) {
+        nextToUnit2.addEventListener("click", () => {
+            appState.progress.unit1 = true;
+            saveState();
+            document.querySelector('[data-tab="tab-unit2"]').click();
+        });
+    }
+    
+    const nextToUnit3 = document.getElementById("btn-next-to-unit3");
+    if (nextToUnit3) {
+        nextToUnit3.addEventListener("click", () => {
+            appState.progress.unit2 = true;
+            saveState();
+            document.querySelector('[data-tab="tab-unit3"]').click();
+        });
+    }
+    
+    const nextToSim = document.getElementById("btn-next-to-sim");
+    if (nextToSim) {
+        nextToSim.addEventListener("click", () => {
+            appState.progress.unit3 = true;
+            saveState();
+            document.querySelector('[data-tab="tab-simulation"]').click();
+        });
+    }
+}
+
+</script>
+</body>
+</html>
