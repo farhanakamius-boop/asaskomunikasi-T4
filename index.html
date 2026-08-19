@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KomLogik - Platform Pembelajaran Interaktif Komunikasi Logistik</title>
+    
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- html2pdf.js CDN (For PDF generation) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5IfW9DZt8tCV33riuxDB37CtGc352gLfufY45vTo15c5zcKODgGCoUMCz5OobSPy6260WnKRg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <!-- LOGIN SCREEN -->
+    <div id="login-screen" class="login-container">
+        <div class="login-card">
+            <div class="login-logo-icon">KL</div>
+            <h2>KomLogik</h2>
+            <p>Platform Pembelajaran Interaktif Komunikasi Logistik</p>
+            
+            <div class="login-form-group">
+                <label for="student-name">Nama Penuh Pelajar:</label>
+                <input type="text" id="student-name" placeholder="Masukkan nama penuh anda...">
+            </div>
+            
+            <div class="login-form-group">
+                <label for="student-id">ID Pelajar:</label>
+                <input type="text" id="student-id" placeholder="Masukkan ID pelajar anda...">
+            </div>
+            
+            <button class="btn btn-primary" id="btn-login-submit" style="width: 100%; margin-top: 1rem; justify-content: center;">
+                🚪 Log Masuk
+            </button>
+            
+            <button class="btn btn-lecturer" id="btn-login-open-lecturer" style="width: 100%; margin-top: 0.5rem; justify-content: center; border-color: var(--primary-pink); color: var(--primary-pink);">
+                🎓 Kawalan Pensyarah (Log Masuk Staf)
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN APP WRAPPER (HIDDEN UNTIL LOGIN) -->
+    <div class="app-container" id="app-main-content" style="display: none;">
+        <!-- Navigation Header -->
+        <header>
+            <div class="nav-wrapper">
+                <div class="logo-section">
+                    <div class="logo-icon">KL</div>
+                    <div class="logo-text">
+                        <h1>KomLogik</h1>
+                        <span>Sijil Perkhidmatan Logistik (SLK)</span>
+                    </div>
+                </div>
+                <div class="nav-controls">
+                    <span id="current-user-badge" style="font-size: 0.8rem; font-weight: 700; color: var(--dark-blue); background: var(--pastel-blue); padding: 0.5rem 0.8rem; border-radius: 4px; border: 1px solid var(--baby-blue);"></span>
+                    <button class="btn btn-secondary" id="btn-download-pdf">
+                        <span>📥</span> Muat Turun PDF
+                    </button>
+                    <button class="btn btn-lecturer" id="btn-open-lecturer">
+                        <span>🎓</span> Kawalan Pensyarah
+                    </button>
+                    <button class="btn btn-lecturer" id="btn-logout" style="border-color: var(--error); color: var(--error);">
+                        <span>🚪</span> Keluar
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Top Banner / Course Header -->
+        <div class="banner">
+            <div class="banner-content">
+                <div class="banner-info">
+                    <span class="banner-badge">Topik 4</span>
+                    <h2>Kemahiran Komunikasi Perniagaan yang Efektif</h2>
+                    <p>Logistik bukan sekadar menggerakkan barang, ia adalah tentang menyelaraskan maklumat. Ketahui cara berkomunikasi secara profesional untuk mengelakkan kelewatan kontena, isu penghantaran, dan kekeliruan operasi.</p>
+                </div>
+                
+                <!-- Student Live Progress Stats -->
+                <div class="banner-stats">
+                    <div class="progress-header">
+                        <span>Kemajuan Belajar</span>
+                        <span id="banner-progress-percent">0%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="banner-progress-fill"></div>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-num" id="stat-overall-progress">0%</div>
+                            <div class="stat-lbl">Selesai</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-num" id="stat-quiz-score">-</div>
+                            <div class="stat-lbl">Skor Kuiz</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <main>
+            <div class="tabs-navigation">
+                <button class="tab-btn active" data-tab="tab-unit1">
+                    <span>1️⃣</span> Ciri Komunikasi Efektif
+                </button>
+                <button class="tab-btn" data-tab="tab-unit2">
+                    <span>2️⃣</span> Jenis Kemahiran
+                </button>
+                <button class="tab-btn" data-tab="tab-unit3">
+                    <span>3️⃣</span> Prinsip 7C Komunikasi
+                </button>
+                <button class="tab-btn" data-tab="tab-simulation">
+                    <span>🕹️</span> Cabaran Logistik (Simulasi)
+                </button>
+                <button class="tab-btn" data-tab="tab-quiz">
+                    <span>📝</span> Uji Minda
+                </button>
+            </div>
+
+            <!-- TAB 1: Ciri-Ciri Komunikasi Efektif -->
+            <div id="tab-unit1" class="tab-panel active">
+                <div class="card">
+                    <h2 class="card-title">Ciri-Ciri Komunikasi Perniagaan yang Efektif</h2>
+                    <p style="margin-bottom: 2rem; color: var(--text-muted);">Komunikasi yang berkesan memastikan mesej daripada pengirim difahami dengan tepat oleh penerima tanpa ada salah tafsir. Klik pada mana-mana ciri di bawah untuk melihat butiran nota dan contoh senario logistik.</p>
+                    
+                    <div class="grid-3">
+                        <div class="ciri-card" data-ciri="tujuan">
+                            <div class="ciri-badge">1</div>
+                            <div class="ciri-icon">🎯</div>
+                            <h3>Kejelasan Tujuan</h3>
+                            <p>Mempunyai matlamat khusus sebelum memulakan sesi komunikasi.</p>
+                        </div>
+                        <div class="ciri-card" data-ciri="kesempurnaan">
+                            <div class="ciri-badge">2</div>
+                            <div class="ciri-icon">📦</div>
+                            <h3>Kesempurnaan</h3>
+                            <p>Mesej lengkap merangkumi semua maklumat penting (5W1H).</p>
+                        </div>
+                        <div class="ciri-card" data-ciri="maklumbalas">
+                            <div class="ciri-badge">3</div>
+                            <div class="ciri-icon">🔄</div>
+                            <h3>Maklum Balas</h3>
+                            <p>Respon penerima untuk pengesahan mesej yang dua hala.</p>
+                        </div>
+                        <div class="ciri-card" data-ciri="empati">
+                            <div class="ciri-badge">4</div>
+                            <div class="ciri-icon">❤️</div>
+                            <h3>Empati</h3>
+                            <p>Memahami perasaan, situasi, and perspektif penerima mesej.</p>
+                        </div>
+                        <div class="ciri-card" data-ciri="menyesuaikan">
+                            <div class="ciri-badge">5</div>
+                            <div class="ciri-icon">👥</div>
+                            <h3>Menyesuaikan Maklumat</h3>
+                            <p>Mengubah nada dan bahasa mengikut latar belakang pendengar.</p>
+                        </div>
+                        <div class="ciri-card" data-ciri="saluran">
+                            <div class="ciri-badge">6</div>
+                            <div class="ciri-icon">📞</div>
+                            <h3>Saluran Pelbagai</h3>
+                            <p>Penggunaan lisan, bertulis, digital, visual, dan non-verbal.</p>
+                        </div>
+                        <div class="ciri-card" data-ciri="khabarangin">
+                            <div class="ciri-badge">7</div>
+                            <div class="ciri-icon">🗣️</div>
+                            <h3>Khabar Angin</h3>
+                            <p>Komunikasi tidak formal (grapevine) terkawal untuk menilai reaksi.</p>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Details Box (Controlled by JS) -->
+                    <div id="ciri-details-container" style="display: none;"></div>
+
+                    <!-- Grapevine / Khabar Angin Special Section -->
+                    <div class="grapevine-container">
+                        <div class="grapevine-header">
+                            <h3>🗣️ Interaksi Khabar Angin (Grapevine)</h3>
+                            <p>Khabar angin sering dilihat negatif, namun ia memainkan peranan penting secara tidak formal dalam syarikat logistik (contoh: di pantri gudang atau kumpulan WhatsApp pemandu lori).</p>
+                        </div>
+                        
+                        <div class="grapevine-interactive">
+                            <div class="grapevine-node">
+                                <div class="grapevine-avatar">👨‍✈️</div>
+                                <h4>Pak Abu</h4>
+                                <div class="role">Pemandu Lori</div>
+                                <div class="grapevine-speech">
+                                    "Dengar cerita laluan kastam di sempadan nak ditukar bulan depan..."
+                                </div>
+                            </div>
+                            
+                            <div class="grapevine-node">
+                                <div class="grapevine-avatar pink">👩‍💼</div>
+                                <h4>Cik Aimi</h4>
+                                <div class="role">Kerani Operasi Gudang</div>
+                                <div class="grapevine-speech">
+                                    "Eh, saya pun dengar juga. Pengurus tengah rancang sistem giliran syif malam baru ke?"
+                                </div>
+                            </div>
+                            
+                            <div class="grapevine-node">
+                                <div class="grapevine-avatar">🤵</div>
+                                <h4>Encik Harris</h4>
+                                <div class="role">Pengurus Logistik</div>
+                                <div class="grapevine-speech">
+                                    "Saya perlu pantau maklum balas tidak rasmi ini untuk jelaskan jadual sebenar dalam mesyuarat esok."
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="grapevine-effect-box">
+                            <h4>Mengapa Grapevine Penting dalam Pengurusan Komunikasi?</h4>
+                            <div class="grapevine-grid">
+                                <div class="grapevine-effect-item">⚡ Menyampaikan info dengan cepat</div>
+                                <div class="grapevine-effect-item">📈 Mengesan mood/emosi staf</div>
+                                <div class="grapevine-effect-item">🔗 Pelengkap mesej rasmi</div>
+                                <div class="grapevine-effect-item">🤝 Mengeratkan hubungan sosial</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="complete-btn-container" style="margin-top: 3rem;">
+                        <button class="btn btn-primary btn-complete-section" id="mark-unit1-complete">
+                            Tandakan Selesai
+                        </button>
+                        <button class="btn btn-secondary" id="btn-next-to-unit2" style="margin-left: 1rem;">
+                            Seterusnya: Unit 2 ➔
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: Jenis Kemahiran Komunikasi -->
+            <div id="tab-unit2" class="tab-panel">
+                <div class="card">
+                    <h2 class="card-title">Jenis-Jenis Kemahiran Komunikasi Perniagaan yang Efektif</h2>
+                    <p style="margin-bottom: 2rem; color: var(--text-muted);">Sebagai bakal graduan Sijil Logistik, anda perlu menguasai pelbagai jenis komunikasi mengikut tugasan. Klik kad di bawah untuk mendedahkan perincian dan tips praktikal bagi setiap kemahiran.</p>
+                    
+                    <div class="flip-grid">
+                        <!-- Interpersonal -->
+                        <div class="flip-card">
+                            <div class="flip-card-front">
+                                <div class="icon">🤝</div>
+                                <h3>Interpersonal</h3>
+                                <p>Komunikasi bersemuka antara dua individu untuk tujuan peribadi/operasi.</p>
+                                <div class="flip-hint">Klik untuk tips ➔</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <h3>Kemahiran Interpersonal</h3>
+                                <div class="flip-content-scroll">
+                                    <p>Berlaku antara dua individu (temuduga kerja, kaunseling staf, atau panggilan pelanggan).</p>
+                                    <p><strong>Ciri Utama:</strong></p>
+                                    <ul>
+                                        <li>Lebih bersifat peribadi dan fleksibel</li>
+                                        <li>Boleh dilakukan dalam kumpulan kecil (3-4 orang)</li>
+                                        <li>Membantu mewujudkan kepercayaan perniagaan</li>
+                                        <li>Melibatkan respons lisan & fizikal</li>
+                                    </ul>
+                                </div>
+                                <button class="btn btn-secondary btn-flip-back">Kembali</button>
+                            </div>
+                        </div>
+
+                        <!-- Pembentangan -->
+                        <div class="flip-card">
+                            <div class="flip-card-front">
+                                <div class="icon">📊</div>
+                                <h3>Pembentangan</h3>
+                                <p>Menyampaikan laporan operasi atau cadangan perniagaan kepada kumpulan.</p>
+                                <div class="flip-hint">Klik untuk tips ➔</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <h3>Kemahiran Pembentangan</h3>
+                                <div class="flip-content-scroll">
+                                    <p>Proses membentang maklumat secara lisan & visual bagi meyakinkan kumpulan sasaran.</p>
+                                    <p><strong>7 Tips Pembentangan Hebat:</strong></p>
+                                    <ul>
+                                        <li>1. Pembukaan yang menarik perhatian</li>
+                                        <li>2. Tampil penuh keyakinan</li>
+                                        <li>3. Penampilan kemas dan profesional</li>
+                                        <li>4. Suara dan sebutan jelas & mudah difahami</li>
+                                        <li>5. Padatkan maklumat utama (hadkan teks)</li>
+                                        <li>6. Gunakan hubungan mata & bahasa badan</li>
+                                        <li>7. Penutup dengan rumusan isi penting</li>
+                                    </ul>
+                                </div>
+                                <button class="btn btn-secondary btn-flip-back">Kembali</button>
+                            </div>
+                        </div>
+
+                        <!-- Pengucapan Awam -->
+                        <div class="flip-card">
+                            <div class="flip-card-front">
+                                <div class="icon">🎤</div>
+                                <h3>Pengucapan Awam</h3>
+                                <p>Menyampaikan ucapan berstruktur kepada lebih daripada 10 pendengar.</p>
+                                <div class="flip-hint">Klik untuk tips ➔</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <h3>Pengucapan Awam</h3>
+                                <div class="flip-content-scroll">
+                                    <p>Penyampaian formal kepada audiens yang ramai (ucapan perasmian gudang, penerangan dasar baru).</p>
+                                    <p><strong>Ciri Utama:</strong></p>
+                                    <ul>
+                                        <li>Terancang, formal, dan berstruktur</li>
+                                        <li>Audiens yang besar (biasa > 10 orang)</li>
+                                        <li>Pengucap bercakap tanpa gangguan</li>
+                                        <li>Sesi soal jawab di akhir ucapan sahaja</li>
+                                        <li>Memerlukan alat bantuan suara yang baik</li>
+                                    </ul>
+                                </div>
+                                <button class="btn btn-secondary btn-flip-back">Kembali</button>
+                            </div>
+                        </div>
+
+                        <!-- Tindak Balas -->
+                        <div class="flip-card">
+                            <div class="flip-card-front">
+                                <div class="icon">💬</div>
+                                <h3>Tindak Balas</h3>
+                                <p>Kemahiran membalas kata-kata bagi membina hubungan dua hala.</p>
+                                <div class="flip-hint">Klik untuk tips ➔</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <h3>Kemahiran Tindak Balas</h3>
+                                <div class="flip-content-scroll">
+                                    <p>Menggalakkan penglibatan penerima mesej dalam perbualan perniagaan.</p>
+                                    <p><strong>Komponen Utama:</strong></p>
+                                    <ul>
+                                        <li><strong>Penstrukturan:</strong> Menyediakan nada sesi rundingan</li>
+                                        <li><strong>Dorongan Minima:</strong> Anggukan, 'Mmm', 'Hmm', senyuman</li>
+                                        <li><strong>Mendengar Isi:</strong> Memahami tema utama klien</li>
+                                        <li><strong>Mendengar Perasaan:</strong> Refleksi emosi non-verbal</li>
+                                    </ul>
+                                </div>
+                                <button class="btn btn-secondary btn-flip-back">Kembali</button>
+                            </div>
+                        </div>
+
+                        <!-- Mendengar -->
+                        <div class="flip-card">
+                            <div class="flip-card-front">
+                                <div class="icon">👂</div>
+                                <h3>Mendengar</h3>
+                                <p>Memahami dan mentafsir mesej secara aktif lisan dan non-verbal.</p>
+                                <div class="flip-hint">Klik untuk tips ➔</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <h3>Kemahiran Mendengar</h3>
+                                <div class="flip-content-scroll">
+                                    <p>Fokus mental dan emosi untuk mentafsir mesej secara tepat.</p>
+                                    <p><strong>Ciri Pendengar Aktif:</strong></p>
+                                    <ul>
+                                        <li>Bertanya soalan jika kurang faham</li>
+                                        <li>Tenang, diam, dan memberi perhatian penuh</li>
+                                        <li>Memberikan tindak balas minima (angguk)</li>
+                                        <li>Boleh membuat rumusan semula isi penting</li>
+                                        <li>Meminta pengulangan kenyataan jika kabur</li>
+                                    </ul>
+                                </div>
+                                <button class="btn btn-secondary btn-flip-back">Kembali</button>
+                            </div>
+                        </div>
+
+                        <!-- Pengurusan Maklumat -->
+                        <div class="flip-card">
+                            <div class="flip-card-front">
+                                <div class="icon">💾</div>
+                                <h3>Pengurusan Maklumat</h3>
+                                <p>Keupayaan mengumpul, menilai, menyusun, dan menyimpan maklumat.</p>
+                                <div class="flip-hint">Klik untuk tips ➔</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <h3>Pengurusan Maklumat</h3>
+                                <div class="flip-content-scroll">
+                                    <p>Memastikan maklumat perniagaan sahih dan sedia digunakan pada bila-bila masa.</p>
+                                    <p><strong>Maklumat yang dihantar mestilah:</strong></p>
+                                    <ul>
+                                        <li><strong>Tepat:</strong> Bebas daripada kesalahan data</li>
+                                        <li><strong>Sahih:</strong> Bersumberkan rujukan sahih</li>
+                                        <li><strong>Relevan:</strong> Sesuai dengan keperluan</li>
+                                        <li><strong>Tersusun:</strong> Berstruktur kemas</li>
+                                        <li><strong>Mudah difahami:</strong> Tiada kekeliruan</li>
+                                    </ul>
+                                </div>
+                                <button class="btn btn-secondary btn-flip-back">Kembali</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Comparison Table Active vs Passive -->
+                    <div style="margin-top: 2rem;">
+                        <h3 style="margin-bottom: 1rem; font-family: var(--font-heading);">Perbezaan: Mendengar Aktif vs Mendengar Pasif</h3>
+                        <div class="table-container">
+                            <table class="lecturer-table">
+                                <thead>
+                                    <tr>
+                                        <th>Ciri Perbandingan</th>
+                                        <th style="background-color: var(--success-light); color: var(--success);">Mendengar Secara Aktif</th>
+                                        <th style="background-color: var(--error-light); color: var(--error);">Mendengar Secara Pasif</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Definisi</strong></td>
+                                        <td>Pendengar terlibat sepenuhnya & memberi tindak balas terhadap idea penyampai.</td>
+                                        <td>Pendengar tidak bertindak balas, hanya membiarkan bunyi masuk.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Aliran Komunikasi</strong></td>
+                                        <td>Dua hala (Two-way communication)</td>
+                                        <td>Sehala (One-way communication)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Reaksi Pendengar</strong></td>
+                                        <td>Menggunakan isyarat, soalan, komen, dan hubungan mata.</td>
+                                        <td>Tiada sebarang reaksi fizikal atau lisan.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Tahap Usaha</strong></td>
+                                        <td>Memerlukan fokus mental dan emosi yang tinggi.</td>
+                                        <td>Tidak memerlukan usaha langsung (hanya pasif).</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Aktiviti Terlibat</strong></td>
+                                        <td>Menganalisis, menilai, mencatat, dan meringkaskan mesej.</td>
+                                        <td>Hanya mendengar bunyi tanpa pemprosesan mendalam.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="complete-btn-container">
+                        <button class="btn btn-primary btn-complete-section" id="mark-unit2-complete">
+                            Tandakan Selesai
+                        </button>
+                        <button class="btn btn-secondary" id="btn-next-to-unit3" style="margin-left: 1rem;">
+                            Seterusnya: Unit 3 ➔
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: 7C Prinsip Komunikasi Efektif -->
+            <div id="tab-unit3" class="tab-panel">
+                <div class="card">
+                    <h2 class="card-title">7C Prinsip Komunikasi Perniagaan yang Efektif</h2>
+                    <p style="margin-bottom: 2rem; color: var(--text-muted);">Prinsip 7C ialah standard emas komunikasi perniagaan global. Klik setiap prinsip di bawah untuk mempelajari takrifan serta perbandingan contoh **Sebelum vs Selepas** e-mel logistik.</p>
+                    
+                    <!-- Completeness -->
+                    <div class="toggle-panel">
+                        <div class="toggle-header">
+                            <h3><span>1.</span> Completeness (Kesempurnaan / Lengkap)</h3>
+                            <div class="arrow">▼</div>
+                        </div>
+                        <div class="toggle-content">
+                            <p>Mesej harus mengandungi semua maklumat yang diperlukan oleh penerima untuk bertindak atau membuat keputusan tanpa memerlukan pertanyaan lanjut (menjawab 5W1H).</p>
+                            <div class="comparison-grid">
+                                <div class="comp-box">
+                                    <span class="comp-badge bad">Sebelum (Tidak Lengkap)</span>
+                                    <div class="comp-text">E-mel: "Sila ambil barang kat pelabuhan hari ini ya."</div>
+                                    <div class="comp-explanation"><strong>Kelemahan:</strong> Penerima tidak tahu gudang mana, barang jenis apa, nombor rujukan DO, lori saiz berapa, atau had masa operasi pelabuhan.</div>
+                                </div>
+                                <div class="comp-box better">
+                                    <span class="comp-badge good">Selepas (Lengkap)</span>
+                                    <div class="comp-text">E-mel: "Pak Abu, sila ke Gudang 3, Pelabuhan Klang sebelum jam 3:00 petang ini untuk mengambil 10 pallet bahan mentah kayu (DO #8892). Bawa dokumen pelepasan kastam yang dilampirkan."</div>
+                                    <div class="comp-explanation"><strong>Kelebihan:</strong> Menjawab apa, di mana, bila, siapa, dokumen rujukan, dan tindakan susulan yang dikehendaki dengan lengkap.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Conciseness -->
+                    <div class="toggle-panel">
+                        <div class="toggle-header">
+                            <h3><span>2.</span> Conciseness (Ringkas / Padat)</h3>
+                            <div class="arrow">▼</div>
+                        </div>
+                        <div class="toggle-content">
+                            <p>Mesej disampaikan secara ringkas, padat, dan terus kepada isu utama tanpa perkataan berlebihan yang membosankan dan melambatkan kefahaman.</p>
+                            <div class="comparison-grid">
+                                <div class="comp-box">
+                                    <span class="comp-badge bad">Sebelum (Meleret-leret)</span>
+                                    <div class="comp-text">E-mel: "Saya ingin menulis e-mel ini bagi pihak operasi untuk memberitahu pihak puan bahawa mesyuarat koordinasi pemandu kita yang dijadualkan esok pagi, kami rasa kami ingin maklumkan mesyuarat itu terpaksa ditunda kerana pengurus kami ada hal lain."</div>
+                                    <div class="comp-explanation"><strong>Kelemahan:</strong> Terlalu panjang lebar, melambatkan masa membaca, dan menggunakan kata pengisi yang tidak perlu.</div>
+                                </div>
+                                <div class="comp-box better">
+                                    <span class="comp-badge good">Selepas (Ringkas & Padat)</span>
+                                    <div class="comp-text">E-mel: "Mesyuarat koordinasi pemandu esok terpaksa ditunda kerana pengurus menghadiri mesyuarat luar. Tarikh baharu akan dimaklumkan petang ini."</div>
+                                    <div class="comp-explanation"><strong>Kelebihan:</strong> Terus kepada tujuan utama, menjimatkan masa, dan maklumat tetap disampaikan dengan jelas.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Consideration -->
+                    <div class="toggle-panel">
+                        <div class="toggle-header">
+                            <h3><span>3.</span> Consideration (Pertimbangan / Empati)</h3>
+                            <div class="arrow">▼</div>
+                        </div>
+                        <div class="toggle-content">
+                            <p>Mengambil kira latar belakang, emosi, keperluan, dan situasi penerima (mengamalkan 'You-attitude' berbanding 'I-attitude').</p>
+                            <div class="comparison-grid">
+                                <div class="comp-box">
+                                    <span class="comp-badge bad">Sebelum (Fokus Diri Sendiri)</span>
+                                    <div class="comp-text">E-mel: "Kami telah menghantar semua invois semalam. Kami mahukan pembayaran segera hari ini kerana kami mahu menutup akaun bulan ini."</div>
+                                    <div class="comp-explanation"><strong>Kelemahan:</strong> Pentingkan diri sendiri (I-attitude), mendesak tanpa bertimbang rasa dengan proses kelulusan kewangan pihak pelanggan.</div>
+                                </div>
+                                <div class="comp-box better">
+                                    <span class="comp-badge good">Selepas (Fokus Penerima)</span>
+                                    <div class="comp-text">E-mel: "Bagi membantu memudahkan urusan penutupan akaun bulanan syarikat tuan, kami amat menghargai sekiranya pembayaran invois yang dilampirkan dapat diproses sebelum jam 5 petang ini."</div>
+                                    <div class="comp-explanation"><strong>Kelebihan:</strong> Menunjukkan empati, menggunakan bahasa profesional yang sopan, dan mengutamakan faedah bersama.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Courtesy -->
+                    <div class="toggle-panel">
+                        <div class="toggle-header">
+                            <h3><span>4.</span> Courtesy (Kesopanan / Budi Bahasa)</h3>
+                            <div class="arrow">▼</div>
+                        </div>
+                        <div class="toggle-content">
+                            <p>Menggunakan nada bahasa yang menghormati, jujur, membina, dan positif serta mengelakkan bahasa yang menyinggung perasaan penerima.</p>
+                            <div class="comparison-grid">
+                                <div class="comp-box">
+                                    <span class="comp-badge bad">Sebelum (Kasar & Menyerang)</span>
+                                    <div class="comp-text">E-mel: "Laporan prestasi lori anda sangat lambat diserahkan. Jangan buat kerja gopoh dan tolong baiki kelakuan cuai anda."</div>
+                                    <div class="comp-explanation"><strong>Kelemahan:</strong> Bersifat peribadi, menyerang pekerja, dan menggunakan nada yang boleh merosakkan motivasi kerja.</div>
+                                </div>
+                                <div class="comp-box better">
+                                    <span class="comp-badge good">Selepas (Sopan & Membina)</span>
+                                    <div class="comp-text">E-mel: "Terima kasih atas usaha anda dalam projek ini. Kami percaya prestasi penghantaran lori boleh ditingkatkan dengan beberapa penyelarasan jadual, dan kami sedia membantu anda."</div>
+                                    <div class="comp-explanation"><strong>Kelebihan:</strong> Memberikan maklum balas membina dengan nada positif, membina hubungan jangka panjang yang kukuh.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Clarity -->
+                    <div class="toggle-panel">
+                        <div class="toggle-header">
+                            <h3><span>5.</span> Clarity (Kejelasan)</h3>
+                            <div class="arrow">▼</div>
+                        </div>
+                        <div class="toggle-content">
+                            <p>Mesej yang jelas, tidak mengelirukan, menggunakan bahasa yang mudah difahami, serta mengelakkan jargon teknikal melampau yang sukar bagi orang awam.</p>
+                            <div class="comparison-grid">
+                                <div class="comp-box">
+                                    <span class="comp-badge bad">Sebelum (Kabur & Jargon Tinggi)</span>
+                                    <div class="comp-text">E-mel: "Peralatan kontena ini diselaraskan mengikut paradigma integrasi pengoptimuman logistik rantaian nilai."</div>
+                                    <div class="comp-explanation"><strong>Kelemahan:</strong> Terlalu abstrak, menggunakan istilah jargon berbelit-belit yang membingungkan penerima biasa.</div>
+                                </div>
+                                <div class="comp-box better">
+                                    <span class="comp-badge good">Selepas (Jelas & Mudah)</span>
+                                    <div class="comp-text">E-mel: "Peralatan kontena baharu ini akan membantu operasi pembungkusan di gudang kita menjadi lebih cepat dan efisien."</div>
+                                    <div class="comp-explanation"><strong>Kelebihan:</strong> Menggunakan perkataan harian, mesej dapat difahami serta-merta tanpa kekeliruan.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Correctness -->
+                    <div class="toggle-panel">
+                        <div class="toggle-header">
+                            <h3><span>6.</span> Correctness (Ketepatan)</h3>
+                            <div class="arrow">▼</div>
+                        </div>
+                        <div class="toggle-content">
+                            <p>Memastikan fakta, ejaan, tatabahasa, tarikh, nombor kontena, dan data angka yang dihantar adalah tepat serta bebas dari sebarang kesilapan.</p>
+                            <div class="comparison-grid">
+                                <div class="comp-box">
+                                    <span class="comp-badge bad">Sebelum (Fakta/Angka Salah)</span>
+                                    <div class="comp-text">WhatsApp: "Esok kita hantar kontena tu. Mungkin dalam 15 Nov kut. Oh silap, 16 Nov."</div>
+                                    <div class="comp-explanation"><strong>Kelemahan:</strong> Data berubah-ubah, ejaan cuai, menjejaskan kredibiliti profesional ejen logistik.</div>
+                                </div>
+                                <div class="comp-box better">
+                                    <span class="comp-badge good">Selepas (Tepat & Sahih)</span>
+                                    <div class="comp-text">WhatsApp: "Status terkini: Kontena import (PI-889) dijadualkan dihantar ke premis tuan pada Khamis, 15 November 2026 jam 9:00 pagi."</div>
+                                    <div class="comp-explanation"><strong>Kelebihan:</strong> Maklumat lengkap dengan nombor kontena, tarikh, dan masa yang disahkan tepat.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Concreteness -->
+                    <div class="toggle-panel">
+                        <div class="toggle-header">
+                            <h3><span>7.</span> Concreteness (Ketegasan / Penekanan / Konkrit)</h3>
+                            <div class="arrow">▼</div>
+                        </div>
+                        <div class="toggle-content">
+                            <p>Mesej mestilah spesifik dan disokong oleh data, angka statistik, atau contoh konkrit, bukannya kenyataan yang abstrak atau terlalu umum.</p>
+                            <div class="comparison-grid">
+                                <div class="comp-box">
+                                    <span class="comp-badge bad">Sebelum (Umum & Samar)</span>
+                                    <div class="comp-text">E-mel: "Perniagaan penghantaran kita ada peningkatan yang agak ketara bulan lepas berbanding sebelumnya."</div>
+                                    <div class="comp-explanation"><strong>Kelemahan:</strong> Samar-samar. Berapa peningkatannya? Tiada pembuktian data operasi.</div>
+                                </div>
+                                <div class="comp-box better">
+                                    <span class="comp-badge good">Selepas (Konkrit & Berfakta)</span>
+                                    <div class="comp-text">E-mel: "Jumlah penghantaran kontena kita meningkat sebanyak 25% (iaitu 120 kontena) pada bulan September, berbanding 96 kontena pada bulan Ogos."</div>
+                                    <div class="comp-explanation"><strong>Kelebihan:</strong> Menunjukkan ketegasan prestasi dengan peratusan dan statistik yang boleh diukur.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="complete-btn-container">
+                        <button class="btn btn-primary btn-complete-section" id="mark-unit3-complete">
+                            Tandakan Selesai
+                        </button>
+                        <button class="btn btn-secondary" id="btn-next-to-sim" style="margin-left: 1rem;">
+                            Seterusnya: Simulasi ➔
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: Simulasi Cabaran Logistik -->
+            <div id="tab-simulation" class="tab-panel">
+                <div class="card" style="padding: 1.5rem;">
+                    <h2 class="card-title">🕹️ Simulasi Cabaran Komunikasi Logistik</h2>
+                    <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Selesaikan kes komunikasi yang sering berlaku dalam operasi logistik harian. Buat pilihan terbaik anda berdasarkan prinsip 7C bagi memuaskan hati pelanggan dan mengelakkan konflik gudang!</p>
+                    
+                    <!-- Simulation Interactive Box -->
+                    <div class="sim-container" id="sim-main-container">
+                        <div class="sim-header">
+                            <h3>Cabaran Eksekutif Logistik</h3>
+                            <span class="sim-badge" id="sim-step-indicator">Peringkat Operasi</span>
+                        </div>
+                        <div class="sim-body" id="sim-body-container">
+                            <div class="sim-sidebar">
+                                <div>
+                                    <h4 style="margin-bottom: 0.5rem; color: var(--text-dark);">Tugasan Simulasi</h4>
+                                    <div class="sim-objective" id="sim-objective-text">
+                                        Membalas mesej pelanggan yang marah tentang kelewatan kontena.
+                                    </div>
+                                </div>
+                                <div class="sim-score-box">
+                                    <div class="sim-score-num" id="sim-score-value">0</div>
+                                    <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">Markah Prestasi</div>
+                                </div>
+                            </div>
+                            <div class="sim-chat-area">
+                                <div class="sim-chat-history" id="sim-chat-history">
+                                    <!-- Messages go here dynamically -->
+                                </div>
+                                <div class="sim-options-area" id="sim-options-area">
+                                    <!-- Options go here dynamically -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 5: Ujian Minda (Quiz) -->
+            <div id="tab-quiz" class="tab-panel">
+                <div class="card">
+                    <h2 class="card-title">📝 Ujian Kefahaman Komunikasi Efektif</h2>
+                    <p style="margin-bottom: 2rem; color: var(--text-muted);">Jawab soalan di bawah untuk menilai kefahaman anda tentang Topik 4. Keputusan anda akan direkodkan dan boleh dipantau oleh pensyarah.</p>
+                    
+                    <!-- Quiz Score Container -->
+                    <div id="quiz-score-container" style="display: none;"></div>
+
+                    <!-- Dynamic Quiz Container -->
+                    <div id="quiz-questions-container"></div>
+
+                    <!-- Quiz Actions -->
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button class="btn btn-primary" id="btn-submit-quiz" style="padding: 0.8rem 2.5rem; font-size: 1rem;">
+                            Hantar Jawapan
+                        </button>
+                        <button class="btn btn-secondary" id="btn-reset-quiz" style="padding: 0.8rem 2.5rem; font-size: 1rem; display: none;">
+                            Ulangi Kuiz
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+
+
+        <!-- Footer -->
+        <footer>
+            <div style="max-width: 1200px; margin: 0 auto;">
+                <p>&copy; 2026 KomLogik SPL - Sijil Perkhidmatan Logistik. Dibuat dengan 💖 untuk kegunaan pendidikan interaktif.</p>
+                <p style="font-size: 0.7rem; margin-top: 0.5rem; color: var(--text-muted);">Dibina berasaskan sukatan pelajaran SPP20243/SPP20293 Asas Komunikasi Perniagaan</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Lecturer Modal Panel -->
+    <div class="modal" id="lecturer-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🎓 Panel Kawalan & Pemantauan Pensyarah</h2>
+                <button class="close-btn" id="btn-close-lecturer">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Class Overview Stats -->
+                <div class="lecturer-stats-grid">
+                    <div class="lecturer-stat-card">
+                        <div class="lecturer-stat-val" id="lecturer-total-students">7</div>
+                        <div class="lecturer-stat-lbl">Pelajar Berdaftar</div>
+                    </div>
+                    <div class="lecturer-stat-card">
+                        <div class="lecturer-stat-val" id="lecturer-avg-progress">82%</div>
+                        <div class="lecturer-stat-lbl">Purata Kemajuan Kelas</div>
+                    </div>
+                    <div class="lecturer-stat-card">
+                        <div class="lecturer-stat-val" id="lecturer-avg-score">85%</div>
+                        <div class="lecturer-stat-lbl">Purata Skor Kuiz</div>
+                    </div>
+                </div>
+
+                <!-- Student Progress Table -->
+                <h3 style="margin-bottom: 0.75rem; font-family: var(--font-heading);">Kemajuan Pelajar Sijil Logistik (SLK)</h3>
+                <div class="table-container">
+                    <table class="lecturer-table">
+                        <thead>
+                            <tr>
+                                <th>ID Pelajar</th>
+                                <th>Nama Pelajar</th>
+                                <th>Kemajuan</th>
+                                <th>Markah Kuiz</th>
+                                <th>Markah Simulasi</th>
+                                <th>Status</th>
+                                <th>Aktif Terakhir</th>
+                                <th style="text-align: center;">Tindakan</th> <!-- Lajur tindakan baru -->
+                            </tr>
+                        </thead>
+                        <tbody id="lecturer-students-list">
+                            <!-- Loaded dynamically via JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Settings and Reports Control -->
+                <div class="lecturer-settings">
+                    <h3 style="font-family: var(--font-heading); color: var(--text-dark); font-size: 1.1rem; margin-bottom: 1rem;">⚙️ Tetapan Dan Laporan Kelas</h3>
+                    <div class="setting-row">
+                        <span>Tetapkan Peratusan Minimum Lulus Kuiz:</span>
+                        <div class="setting-control">
+                            <input type="range" id="passing-mark-slider" min="50" max="100" step="5" value="70">
+                            <strong id="passing-mark-value">70%</strong>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; margin-top: 1.5rem; justify-content: flex-end;">
+                        <button class="btn btn-secondary" id="btn-export-csv">
+                            📊 Muat Turun Laporan (CSV)
+                        </button>
+                        <button class="btn btn-lecturer" id="btn-reset-class">
+                            🗑️ Set Semula Kelas
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HIDDEN PRINT LAYOUT (Used strictly to generate the notes PDF cleanly via html2pdf.js) -->
+    <div id="print-notes-template">
+        <!-- Page 1 -->
+        <div class="print-page">
+            <div class="pdf-header">
+                <div class="pdf-title">TOPIK 4: KEMAHIRAN KOMUNIKASI PERNIAGAAN YANG EFEKTIF</div>
+                <div class="pdf-meta">Sijil Perkhidmatan Logistik (SLK)</div>
+            </div>
+            
+            <div class="pdf-section">
+                <div class="pdf-section-title">4.1 Menerangkan Ciri-Ciri Komunikasi Perniagaan yang Efektif</div>
+                <div class="pdf-content">
+                    <p>Komunikasi berkesan bermakna mesej yang dihantar oleh pengirim dapat diterima, difahami dengan jelas dan tepat oleh penerima tanpa sebarang kekeliruan.</p>
+                    
+                    <p><strong>Ciri-Ciri Komunikasi Berkesan:</strong></p>
+                    <ul>
+                        <li><strong>Kejelasan Tujuan:</strong> Pengirim mempunyai matlamat khusus sebelum menyampaikan mesej. Ia mengelakkan kekeliruan, meningkatkan fokus, mempermudah tindakan dan mempercepatkan keputusan kerja.</li>
+                        <li><strong>Kesempurnaan (Completeness):</strong> Mesej mengandungi semua maklumat penting (apa, siapa, bila, di mana, bagaimana) supaya penerima tidak perlu membuat andaian tambahan.</li>
+                        <li><strong>Maklum Balas (Feedback):</strong> Respon penerima selepas menerima mesej untuk menunjukkan pemahaman, membetulkan salah faham, dan mewujudkan komunikasi dua hala.</li>
+                        <li><strong>Empati (Empathy):</strong> Keupayaan memahami situasi dan perasaan orang lain serta menggunakan nada yang sopan semasa berkomunikasi bagi mengurangkan konflik.</li>
+                        <li><strong>Menyesuaikan Maklumat:</strong> Mengubah gaya bahasa, nada, dan maklumat mengikut jawatan, tahap pendidikan, dan saluran komunikasi pendengar.</li>
+                        <li><strong>Saluran Pelbagai:</strong> Penggunaan lisan (panggilan telefon), bertulis (memo), digital (WhatsApp), visual (carta), dan non-verbal (bahasa badan).</li>
+                        <li><strong>Khabar Angin (Grapevine):</strong> Komunikasi tidak formal secara spontan antara pekerja yang berfungsi menyebarkan info dengan pantas dan menilai emosi/reaksi kakitangan.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pdf-section">
+                <div class="pdf-section-title">4.2 Jenis-Jenis Kemahiran Komunikasi Perniagaan yang Efektif</div>
+                <div class="pdf-content">
+                    <p>Terdapat beberapa kemahiran utama yang perlu dikuasai dalam organisasi perniagaan:</p>
+                    <ul>
+                        <li><strong>Kemahiran Komunikasi Interpersonal:</strong> Komunikasi berpasangan antara dua individu untuk tujuan peribadi/temuduga/kaunseling/rundingan.</li>
+                        <li><strong>Kemahiran Pembentangan:</strong> Proses membentangkan laporan/idea secara lisan & visual. Memerlukan persediaan (sebelum), persembahan mantap (semasa), dan maklum balas (selepas).</li>
+                        <li><strong>Kemahiran Pengucapan Awam:</strong> Ucapan berstruktur di majlis terbuka kepada lebih 10 orang tanpa gangguan semasa bercakap. Sesi soalan di hujung.</li>
+                        <li><strong>Kemahiran Tindak Balas:</strong> Kebolehan membalas percakapan (termasuk kemahiran penstrukturan nada, dorongan minima seperti mengangguk, 'Hmm'/'Mmm', dan mendengar isi serta perasaan).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Page 2 -->
+        <div class="print-page">
+            <div class="pdf-header">
+                <div class="pdf-title">TOPIK 4: KEMAHIRAN KOMUNIKASI PERNIAGAAN YANG EFEKTIF</div>
+                <div class="pdf-meta">Sijil Perkhidmatan Logistik (SLK)</div>
+            </div>
+            
+            <div class="pdf-section">
+                <div class="pdf-content">
+                    <ul>
+                        <li><strong>Kemahiran Mendengar:</strong> Keupayaan mentafsir mesej secara aktif (bertanya soalan, tenang, diam, membuat rumusan) berbanding pasif (mendengar sehala tanpa respon).</li>
+                        <li><strong>Kemahiran Pengurusan Maklumat:</strong> Keupayaan mengumpul, menyusun, menilai, menyimpan, dan menyampaikan maklumat secara tepat, sahih, dan relevan.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pdf-section">
+                <div class="pdf-section-title">4.3 Prinsip 7C Komunikasi Perniagaan yang Efektif</div>
+                <div class="pdf-content">
+                    <p>Setiap komunikasi bertulis mahupun lisan hendaklah mematuhi 7 prinsip utama:</p>
+                    
+                    <p><strong>1. Completeness (Kesempurnaan/Lengkap)</strong><br>
+                    Mesej mengandungi fakta lengkap supaya penerima boleh mengambil tindakan langsung.<br>
+                    <span style="font-style: italic; font-size: 11px;">Contoh Logistik: Menyertakan Nombor Kontena, Nombor DO, Tarikh, Masa, dan Dokumen Pelepasan semasa mengarah pemandu lori.</span></p>
+                    
+                    <p><strong>2. Conciseness (Ringkas / Padat)</strong><br>
+                    Fokus kepada inti pati mesej penting sahaja tanpa mengulang maklumat yang melambatkan pemahaman.</p>
+                    
+                    <p><strong>3. Consideration (Pertimbangan / Empati)</strong><br>
+                    Mengambil kira latar belakang, emosi, dan situasi penerima (menggunakan nada 'You-attitude' yang sopan).</p>
+                    
+                    <p><strong>4. Courtesy (Kesopanan / Ihsan / Budi Bahasa)</strong><br>
+                    Mesej mestilah bernada positif, tidak menyinggung atau menyerang emosi, serta menghormati pendengar.</p>
+                    
+                    <p><strong>5. Clarity (Kejelasan)</strong><br>
+                    Menggunakan bahasa yang mudah dan tepat, mengelakkan ayat berbelit-belit atau jargon teknikal yang mengelirukan.</p>
+                    
+                    <p><strong>6. Correctness (Ketepatan)</strong><br>
+                    Memastikan data angka, nombor rujukan, ejaan, dan tatabahasa adalah disemak sahih dan bebas dari ralat.</p>
+                    
+                    <p><strong>7. Concreteness (Ketegasan / Penekanan)</strong><br>
+                    Mesej disokong oleh data statistik atau fakta khusus yang boleh diukur untuk membuktikan kenyataan.<br>
+                    <span style="font-style: italic; font-size: 11px;">Contoh: 'Prestasi tepat masa Julai meningkat 25%' berbanding 'prestasi kita naik bulan lepas'.</span></p>
+                </div>
+            </div>
+            
+            <div class="pdf-section" style="margin-top: 30px; border-top: 1px solid #FF6B9B; padding-top: 10px; text-align: center;">
+                <p style="font-size: 10px; color: #5C5E76;">Nota Platform KomLogik SPL. Dihasilkan khas untuk Pelajar Sijil Perkhidmatan Logistik.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Script file link -->
+    <script src="js/script.js"></script>
+</body>
+</html>
